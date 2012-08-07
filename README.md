@@ -64,3 +64,42 @@ Algorithm = process that controls how population evolves
         Population evolve(Function function, Selector selector, Population population)
 
         boolean shouldTerminate()
+
+### The Flow
+Consult [The Project Spot](http://www.theprojectspot.com/tutorial-post/creating-a-genetic-algorithm-for-beginners/3) for a more detailed description.
+
+#### Outline
+1. Initialize random population
+2. Select chromosomes through fitness evaluation
+3. Generate next population via crossover and mutation
+
+#### Code Stubs
+
+Main
+
+    population.initialize();
+    while (!algorithm.shouldTerminate()) {
+        population = algorithm.evolve(function, selector, population);
+    }
+
+Algorithm
+
+    ... implements Algorithm {
+        ...
+
+        Population evolve(Function function, Selector selector, Population population) {
+            Population nextPopulation = ...;
+
+            Chromosome[] chromosomes = selector.select(population.size(), function, population);
+            for (int index = 0; index < chromosomes.length; index++) {
+                Chromosome chromosome = chromosomes[i].crossover(chromosomes[(i + 1) % chromosomes.length]);
+                chromosome.mutate(probability);
+
+                nextPopulation.add(chromosome);
+            }
+
+            return nextPopulation;
+        }
+
+        ...
+    }
