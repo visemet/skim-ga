@@ -1,5 +1,7 @@
 package edu.caltech.visemet.skelgen;
 
+import java.util.Random;
+
 /**
  *
  * @author Max Hirschhorn #visemet
@@ -13,9 +15,9 @@ public abstract class AbstractGene<T extends Base> implements Gene<T> {
     }
 
     @Override
-    public void randomize() {
+    public void randomize(Random random) {
         for (T base : sequence) {
-            base.randomize();
+            base.randomize(random);
         }
     }
 
