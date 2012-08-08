@@ -4,12 +4,19 @@ package edu.caltech.visemet.skelgen;
  *
  * @author Max Hirschhorn #visemet
  */
-public abstract class AbstractGene<T> implements Gene<T> {
+public abstract class AbstractGene<T extends Base> implements Gene<T> {
 
     private T[] sequence;
 
     public AbstractGene(T[] sequence) {
         this.sequence = sequence;
+    }
+
+    @Override
+    public void randomize() {
+        for (T base : sequence) {
+            base.randomize();
+        }
     }
 
     @Override

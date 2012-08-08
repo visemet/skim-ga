@@ -4,7 +4,7 @@ package edu.caltech.visemet.skelgen;
  *
  * @author Max Hirschhorn #visemet
  */
-public interface Gene<T> {
+public interface Gene<T extends Base> {
 
     void randomize();
 
