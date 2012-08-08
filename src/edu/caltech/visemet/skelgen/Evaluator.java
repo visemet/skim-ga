@@ -4,7 +4,7 @@ package edu.caltech.visemet.skelgen;
  *
  * @author Max Hirschhorn #visemet
  */
-public interface Function {
+public interface Evaluator {
 
     double evaluate(Chromosome chromosome);
 }

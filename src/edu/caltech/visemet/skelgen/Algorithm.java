@@ -6,7 +6,7 @@ package edu.caltech.visemet.skelgen;
  */
 public interface Algorithm {
 
-    Population evolve(Function function, Selector selector, Population population);
+    Population evolve(Evaluator evaluator, Selector selector, Population population);
 
     boolean shouldTerminate();
 }

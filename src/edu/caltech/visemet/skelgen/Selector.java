@@ -6,5 +6,5 @@ package edu.caltech.visemet.skelgen;
  */
 public interface Selector {
 
-    Chromosome[] select(int count, Function function, Population population);
+    Chromosome[] select(int count, Evaluator evaluator, Population population);
 }
