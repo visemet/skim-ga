@@ -21,6 +21,7 @@ public class DefaultPopulation implements Population {
         Random random = new Random();
 
         for (Chromosome chromosome : chromosomes) {
+            chromosome.initialize();
             chromosome.randomize(random);
         }
     }

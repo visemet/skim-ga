@@ -8,6 +8,8 @@ import java.util.Random;
  */
 public interface Chromosome {
 
+    void initialize();
+
     void randomize(Random random);
 
     Gene getGeneAt(int index);

@@ -15,6 +15,13 @@ public abstract class AbstractChromosome implements Chromosome {
     }
 
     @Override
+    public void initialize() {
+        for (Gene gene : genes) {
+            gene.initialize();
+        }
+    }
+
+    @Override
     public void randomize(Random random) {
         for (Gene gene : genes) {
             gene.randomize(random);
