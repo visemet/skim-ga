@@ -8,6 +8,8 @@ import java.util.Random;
  */
 public interface Gene<T extends Base> {
 
+    void initialize();
+
     void randomize(Random random);
 
     T[] getSequence();
