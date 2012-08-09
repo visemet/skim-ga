@@ -6,7 +6,7 @@ import java.util.Random;
  *
  * @author Max Hirschhorn #visemet
  */
-public abstract class AbstractChromosome implements Chromosome {
+public class AbstractChromosome implements Chromosome {
 
     private Gene[] genes;
 
