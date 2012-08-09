@@ -1,5 +1,6 @@
-package edu.caltech.visemet.skelgen;
+package edu.caltech.visemet.skelgen.genes;
 
+import edu.caltech.visemet.skelgen.Base;
 import java.util.Random;
 
 /**
