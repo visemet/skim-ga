@@ -6,5 +6,5 @@ package edu.caltech.visemet.skelgen;
  */
 public interface MutationOperator {
 
-    void mutate(double probability, Chromosome chromosome);
+    void mutate(double probability, Gene gene);
 }

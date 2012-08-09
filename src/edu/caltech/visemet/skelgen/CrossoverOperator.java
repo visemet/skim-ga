@@ -6,5 +6,5 @@ package edu.caltech.visemet.skelgen;
  */
 public interface CrossoverOperator {
 
-    void crossover(Chromosome parent1, Chromosome parent2, Chromosome child);
+    void crossover(Gene parent1, Gene parent2, Gene child);
 }

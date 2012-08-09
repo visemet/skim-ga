@@ -25,37 +25,29 @@ public class NpointCrossover implements CrossoverOperator {
     }
 
     @Override
-    public void crossover(Chromosome parent1, Chromosome parent2, Chromosome child) {
+    public void crossover(Gene parent1, Gene parent2, Gene child) {
         int geneLength = child.length();
 
-        for (int geneIndex = 0; geneIndex < geneLength; geneIndex++) {
-            Gene parentGene1 = parent1.getGeneAt(geneIndex);
-            Gene parentGene2 = parent2.getGeneAt(geneIndex);
-            Gene childGene = child.getGeneAt(geneIndex);
+        int[] points = new int[n + 2];
+        for (int pointIndex = 1; pointIndex < points.length - 1; pointIndex++) {
+            points[pointIndex] = random.nextInt(geneLength);
+        }
 
-            int baseLength = childGene.length();
+        points[points.length - 1] = geneLength;
 
-            int[] points = new int[n + 2];
-            for (int pointIndex = 1; pointIndex < points.length - 1; pointIndex++) {
-                points[pointIndex] = random.nextInt(baseLength);
-            }
+        Arrays.sort(points);
 
-            points[points.length - 1] = baseLength;
+        for (int pointIndex = 1; pointIndex < points.length; pointIndex++) {
+            int startPoint = points[pointIndex - 1];
+            int endPoint = points[pointIndex];
 
-            Arrays.sort(points);
-
-            for (int pointIndex = 1; pointIndex < points.length; pointIndex++) {
-                int startPoint = points[pointIndex - 1];
-                int endPoint = points[pointIndex];
-
-                if (pointIndex % 2 == 1) {
-                    for (int baseIndex = startPoint; baseIndex < endPoint; baseIndex++) {
-                        childGene.getBaseAt(baseIndex).setValue(parentGene1.getBaseAt(baseIndex).getValue());
-                    }
-                } else {
-                    for (int baseIndex = startPoint; baseIndex < endPoint; baseIndex++) {
-                        childGene.getBaseAt(baseIndex).setValue(parentGene2.getBaseAt(baseIndex).getValue());
-                    }
+            if (pointIndex % 2 == 1) {
+                for (int baseIndex = startPoint; baseIndex < endPoint; baseIndex++) {
+                    child.getBaseAt(baseIndex).setValue(parent1.getBaseAt(baseIndex).getValue());
+                }
+            } else {
+                for (int baseIndex = startPoint; baseIndex < endPoint; baseIndex++) {
+                    child.getBaseAt(baseIndex).setValue(parent2.getBaseAt(baseIndex).getValue());
                 }
             }
         }
