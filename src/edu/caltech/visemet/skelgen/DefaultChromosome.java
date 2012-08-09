@@ -6,11 +6,11 @@ import java.util.Random;
  *
  * @author Max Hirschhorn #visemet
  */
-public class AbstractChromosome implements Chromosome {
+public class DefaultChromosome implements Chromosome {
 
     private Gene[] genes;
 
-    public AbstractChromosome(Gene[] genes) {
+    public DefaultChromosome(Gene[] genes) {
         this.genes = genes;
     }
 
