@@ -45,4 +45,22 @@ public abstract class AbstractGene<T extends Base> implements Gene<T> {
     public int length() {
         return sequence.length;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("[");
+
+        sb.append(getBaseAt(0));
+
+        int length = length();
+        for (int index = 1; index < length; index++) {
+            sb.append(", ").append(getBaseAt(index));
+        }
+
+        sb.append("]");
+
+        return sb.toString();
+    }
 }

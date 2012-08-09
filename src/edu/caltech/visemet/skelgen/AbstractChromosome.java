@@ -36,4 +36,21 @@ public abstract class AbstractChromosome implements Chromosome {
         return genes.length;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("[");
+
+        sb.append(getGeneAt(0));
+
+        int length = length();
+        for (int index = 1; index < length; index++) {
+            sb.append(", ").append(getGeneAt(index));
+        }
+
+        sb.append("]");
+
+        return sb.toString();
+    }
 }
