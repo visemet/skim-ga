@@ -54,10 +54,12 @@ public class RouletteWheelSelector implements SelectionOperator {
             double probability = random.nextDouble();
 
             int chromosomeIndex = 0;
-            while (chromosomeIndex < length) {
+            while (chromosomeIndex < length - 1) {
                 if (probability < fitnesses[chromosomeIndex]) {
                     break;
                 }
+
+                probability -= fitnesses[chromosomeIndex];
 
                 chromosomeIndex++;
             }
