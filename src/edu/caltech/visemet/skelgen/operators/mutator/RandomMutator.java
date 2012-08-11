@@ -8,7 +8,7 @@ import java.util.Random;
  *
  * @author Max Hirschhorn #visemet
  */
-public class RandomizeMutator implements MutationOperator {
+public class RandomMutator implements MutationOperator {
 
     private Random random = new Random();
 
