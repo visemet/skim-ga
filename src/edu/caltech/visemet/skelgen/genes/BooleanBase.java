@@ -13,7 +13,7 @@ public class BooleanBase implements Base<Boolean> {
 
     @Override
     public void randomize(Random random) {
-        value = random.nextBoolean();
+        setValue(random.nextBoolean());
     }
 
     @Override
