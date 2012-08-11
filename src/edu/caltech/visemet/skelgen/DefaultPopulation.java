@@ -40,4 +40,9 @@ public class DefaultPopulation implements Population {
     public Iterator<Chromosome> iterator() {
         return chromosomes.iterator();
     }
+
+    @Override
+    public Chromosome[] toArray() {
+        return chromosomes.toArray(new DefaultChromosome[0]);
+    }
 }

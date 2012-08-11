@@ -15,4 +15,6 @@ public interface Population {
     int size();
 
     Iterator<Chromosome> iterator();
+
+    Chromosome[] toArray();
 }
