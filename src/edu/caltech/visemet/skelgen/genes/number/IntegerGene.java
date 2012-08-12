@@ -8,6 +8,10 @@ import edu.caltech.visemet.skelgen.AbstractGene;
  */
 public class IntegerGene extends AbstractGene<IntegerBase> {
 
+    public IntegerGene(int length) {
+        this(new IntegerBase[length]);
+    }
+
     public IntegerGene(IntegerBase[] sequence) {
         super(sequence);
     }
