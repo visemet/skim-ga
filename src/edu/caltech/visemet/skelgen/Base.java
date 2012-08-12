@@ -13,4 +13,6 @@ public interface Base<T> {
     T getValue();
 
     void setValue(T value);
+
+    Base<T> copy();
 }

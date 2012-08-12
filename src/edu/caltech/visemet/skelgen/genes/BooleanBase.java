@@ -27,6 +27,15 @@ public class BooleanBase implements Base<Boolean> {
     }
 
     @Override
+    public BooleanBase copy() {
+        BooleanBase copy = new BooleanBase();
+
+        copy.setValue(value);
+
+        return copy;
+    }
+
+    @Override
     public String toString() {
         return value ? "1" : "0";
     }

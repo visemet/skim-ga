@@ -1,5 +1,6 @@
 package edu.caltech.visemet.skelgen.genes.number;
 
+import edu.caltech.visemet.skelgen.Base;
 import edu.caltech.visemet.skelgen.NumberBase;
 import java.util.Random;
 
@@ -58,6 +59,17 @@ public class IntegerBase implements NumberBase<Integer> {
     @Override
     public void setValue(Integer value) {
         this.value = Math.min(Math.max(minValue, value), maxValue);
+    }
+
+    @Override
+    public IntegerBase copy() {
+        IntegerBase copy = new IntegerBase();
+
+        copy.setValue(value);
+        copy.setMinValue(minValue);
+        copy.setMaxValue(maxValue);
+
+        return copy;
     }
 
     @Override
