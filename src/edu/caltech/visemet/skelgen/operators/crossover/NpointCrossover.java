@@ -1,6 +1,6 @@
 package edu.caltech.visemet.skelgen.operators.crossover;
 
-import edu.caltech.visemet.skelgen.Chromosome;
+import edu.caltech.visemet.skelgen.Base;
 import edu.caltech.visemet.skelgen.CrossoverOperator;
 import edu.caltech.visemet.skelgen.Gene;
 import java.util.Arrays;
@@ -25,31 +25,38 @@ public class NpointCrossover implements CrossoverOperator {
     }
 
     @Override
-    public void crossover(Gene parent1, Gene parent2, Gene child) {
-        int geneLength = child.length();
+    public Gene crossover(double probability, Gene parent, Gene... otherParents) {
+        Gene child = parent.copy();
 
-        int[] points = new int[n + 2];
-        for (int pointIndex = 1; pointIndex < points.length - 1; pointIndex++) {
-            points[pointIndex] = random.nextInt(geneLength);
-        }
+        if (random.nextDouble() < probability) {
+            for (Gene otherParent : otherParents) {
+                int geneLength = child.length();
 
-        points[points.length - 1] = geneLength;
-
-        Arrays.sort(points);
-
-        for (int pointIndex = 1; pointIndex < points.length; pointIndex++) {
-            int startPoint = points[pointIndex - 1];
-            int endPoint = points[pointIndex];
-
-            if (pointIndex % 2 == 1) {
-                for (int baseIndex = startPoint; baseIndex < endPoint; baseIndex++) {
-                    child.getBaseAt(baseIndex).setValue(parent1.getBaseAt(baseIndex).getValue());
+                int[] points = new int[n + 2];
+                for (int pointIndex = 1; pointIndex < points.length - 1; pointIndex++) {
+                    points[pointIndex] = random.nextInt(geneLength);
                 }
-            } else {
-                for (int baseIndex = startPoint; baseIndex < endPoint; baseIndex++) {
-                    child.getBaseAt(baseIndex).setValue(parent2.getBaseAt(baseIndex).getValue());
+
+                points[points.length - 1] = geneLength;
+
+                Arrays.sort(points);
+
+                for (int pointIndex = 1; pointIndex < points.length; pointIndex++) {
+                    int startPoint = points[pointIndex - 1];
+                    int endPoint = points[pointIndex];
+
+                    if (pointIndex % 2 == 0) {
+                        for (int baseIndex = startPoint; baseIndex < endPoint; baseIndex++) {
+                            Base childBase = child.getBaseAt(baseIndex);
+                            Base otherParentBase = otherParent.getBaseAt(baseIndex);
+
+                            childBase.setValue(otherParentBase.getValue());
+                        }
+                    }
                 }
             }
         }
+
+        return child;
     }
 }
