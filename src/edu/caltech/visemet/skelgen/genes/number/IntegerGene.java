@@ -1,6 +1,7 @@
 package edu.caltech.visemet.skelgen.genes.number;
 
 import edu.caltech.visemet.skelgen.AbstractGene;
+import edu.caltech.visemet.skelgen.Gene;
 
 /**
  *
@@ -22,5 +23,18 @@ public class IntegerGene extends AbstractGene<IntegerBase> {
         for (int index = 0; index < length; index++) {
            setBaseAt(index, new IntegerBase());
         }
+    }
+
+    @Override
+    public IntegerGene copy() {
+        int length = length();
+
+        IntegerGene copy = new IntegerGene(length);
+
+        for (int index = 0; index < length; index++) {
+            copy.setBaseAt(index, getBaseAt(index).copy());
+        }
+
+        return copy;
     }
 }

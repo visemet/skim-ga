@@ -2,6 +2,7 @@ package edu.caltech.visemet.skelgen.genes;
 
 import edu.caltech.visemet.skelgen.AbstractGene;
 import edu.caltech.visemet.skelgen.Base;
+import edu.caltech.visemet.skelgen.Gene;
 
 /**
  *
@@ -19,6 +20,19 @@ public class BooleanGene extends AbstractGene<BooleanBase> {
         for (int index = 0; index < length; index++) {
            setBaseAt(index, new BooleanBase());
         }
+    }
+
+    @Override
+    public BooleanGene copy() {
+        int length = length();
+
+        BooleanGene copy = new BooleanGene(length);
+
+        for (int index = 0; index < length; index++) {
+            copy.setBaseAt(index, getBaseAt(index).copy());
+        }
+
+        return copy;
     }
 
     @Override

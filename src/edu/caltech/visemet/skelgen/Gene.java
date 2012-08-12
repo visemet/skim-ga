@@ -21,4 +21,6 @@ public interface Gene<T extends Base> {
     void setBaseAt(int index, T base);
 
     int length();
+
+    Gene<T> copy();
 }
