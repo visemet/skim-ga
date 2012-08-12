@@ -9,6 +9,8 @@ import java.util.Random;
  */
 public class IntegerBase implements NumberBase<Integer> {
 
+    public static int PRECISION = 1;
+
     private int minValue;
     private int maxValue;
 
@@ -45,7 +47,7 @@ public class IntegerBase implements NumberBase<Integer> {
 
     @Override
     public void randomize(Random random) {
-        setValue(minValue + (int) (random.nextDouble() * (maxValue - minValue)));
+        setValue(minValue + (int) (random.nextDouble() * (maxValue - minValue + PRECISION)));
     }
 
     @Override
@@ -56,5 +58,10 @@ public class IntegerBase implements NumberBase<Integer> {
     @Override
     public void setValue(Integer value) {
         this.value = Math.min(Math.max(minValue, value), maxValue);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 }
