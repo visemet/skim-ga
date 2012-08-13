@@ -8,7 +8,9 @@ import java.util.Random;
  *
  * @author Max Hirschhorn #visemet
  */
-public class RandomMutator implements MutationOperator {
+public enum RandomMutator implements MutationOperator {
+
+    INSTANCE;
 
     private Random random = new Random();
 

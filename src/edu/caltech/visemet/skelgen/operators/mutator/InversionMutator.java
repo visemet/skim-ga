@@ -9,7 +9,9 @@ import java.util.Random;
  *
  * @author Max Hirschhorn #visemet
  */
-public class InversionMutator implements MutationOperator<BooleanGene> {
+public enum InversionMutator implements MutationOperator<BooleanGene> {
+
+    INSTANCE;
 
     private Random random = new Random();
 

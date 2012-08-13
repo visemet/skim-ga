@@ -52,7 +52,7 @@ public class GeneticAlgorithmConfiguration {
             crossoverProbability = 1;
             mutationProbability = 0;
             crossover = NpointCrossover.ONE_POINT;
-            mutator = new RandomMutator();
+            mutator = RandomMutator.INSTANCE;
         }
 
         public Builder setShouldRetainMostFit(boolean shouldRetainMostFit) {
