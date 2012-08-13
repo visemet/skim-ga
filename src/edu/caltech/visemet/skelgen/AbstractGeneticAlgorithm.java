@@ -1,5 +1,6 @@
 package edu.caltech.visemet.skelgen;
 
+import edu.caltech.visemet.skelgen.statistics.PopulationStatistics;
 import java.util.ArrayList;
 
 /**
@@ -24,7 +25,13 @@ public abstract class AbstractGeneticAlgorithm implements GeneticAlgorithm {
         CrossoverOperator crossover = configuration.getCrossover();
         MutationOperator mutator = configuration.getMutator();
 
-        Chromosome[] chromosomes = selector.select(population.size(), evaluator, population);
+        int count = population.size();
+        if (configuration.shouldRetainMostFit()) {
+            nextPopulation.add(PopulationStatistics.getMostFitChromosome(evaluator, population));
+            count--;
+        }
+
+        Chromosome[] chromosomes = selector.select(count, evaluator, population);
         for (int chromosomeIndex = 0; chromosomeIndex < chromosomes.length; chromosomeIndex++) {
             Chromosome parent = chromosomes[chromosomeIndex];
             Chromosome otherParent = chromosomes[(chromosomeIndex + 1) % chromosomes.length];

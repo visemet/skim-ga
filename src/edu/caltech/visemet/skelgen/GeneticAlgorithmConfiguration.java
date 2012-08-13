@@ -31,7 +31,13 @@ public class GeneticAlgorithmConfiguration {
         return builder.mutator;
     }
 
+    public boolean shouldRetainMostFit() {
+        return builder.shouldRetainMostFit;
+    }
+
     public static class Builder {
+
+        private boolean shouldRetainMostFit;
 
         private double crossoverProbability;
 
@@ -42,10 +48,16 @@ public class GeneticAlgorithmConfiguration {
         private MutationOperator mutator;
 
         public Builder() {
+            shouldRetainMostFit = true;
             crossoverProbability = 1;
             mutationProbability = 0;
             crossover = NpointCrossover.ONE_POINT;
             mutator = new RandomMutator();
+        }
+
+        public Builder setShouldRetainMostFit(boolean shouldRetainMostFit) {
+            this.shouldRetainMostFit = shouldRetainMostFit;
+            return this;
         }
 
         public Builder setCrossoverProbability(double crossoverProbability) {
