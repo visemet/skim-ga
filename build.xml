@@ -1,6 +1,6 @@
-<project name="skelgen" default="compile" basedir=".">
+<project name="skim-ga" default="compile" basedir=".">
   <description>
-    A skeleton of a framework for writing genetic algorithms.
+    A simple framework for writing genetic algorithms.
   </description>
 
   <!-- Global Properties -->

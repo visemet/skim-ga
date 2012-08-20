@@ -1,7 +1,7 @@
-skelgen
+skim-ga
 =======
 
-A skeleton of a framework for writing genetic algorithms.
+A simple framework for writing genetic algorithms.
 
 Motivation
 ----------
