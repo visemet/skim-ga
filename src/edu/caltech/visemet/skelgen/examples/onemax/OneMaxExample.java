@@ -7,9 +7,11 @@ import edu.caltech.visemet.skelgen.operators.crossover.NpointCrossover;
 import edu.caltech.visemet.skelgen.operators.mutator.InversionMutator;
 import edu.caltech.visemet.skelgen.operators.selector.RouletteWheelSelector;
 import edu.caltech.visemet.skelgen.statistics.PopulationStatistics;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
@@ -85,10 +87,12 @@ public class OneMaxExample extends AbstractExample {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) {
         CommandLineParser parser = new PosixParser();
 
         Options options = new Options();
+
+        Option help = new Option("h", "help", false, "print this message");
 
         Option gene = OptionBuilder
                 .withLongOpt("gene-length")
@@ -97,7 +101,7 @@ public class OneMaxExample extends AbstractExample {
                 .withArgName("LENGTH")
                 .withType(Number.class)
                 .isRequired()
-                .create();
+                .create("gl");
 
         Option population = OptionBuilder
                 .withLongOpt("population-size")
@@ -106,7 +110,7 @@ public class OneMaxExample extends AbstractExample {
                 .withArgName("SIZE")
                 .withType(Number.class)
                 .isRequired()
-                .create();
+                .create("ps");
 
         Option generations = OptionBuilder
                 .withLongOpt("num-generations")
@@ -115,7 +119,7 @@ public class OneMaxExample extends AbstractExample {
                 .withArgName("NUM")
                 .withType(Number.class)
                 .isRequired()
-                .create();
+                .create("ng");
 
         Option crossover = OptionBuilder
                 .withLongOpt("crossover-prob")
@@ -124,7 +128,7 @@ public class OneMaxExample extends AbstractExample {
                 .withArgName("PROB")
                 .withType(Number.class)
                 .isRequired()
-                .create();
+                .create("cp");
 
         Option mutation = OptionBuilder
                 .withLongOpt("mutation-prob")
@@ -133,33 +137,59 @@ public class OneMaxExample extends AbstractExample {
                 .withArgName("PROB")
                 .withType(Number.class)
                 .isRequired()
-                .create();
+                .create("mp");
 
+        options.addOption(help);
         options.addOption(gene);
         options.addOption(population);
         options.addOption(generations);
         options.addOption(crossover);
         options.addOption(mutation);
 
-        // Parses the command line arguments
-        CommandLine line = parser.parse(options, args);
+        try {
+            // Parses the command line arguments
+            CommandLine line = parser.parse(options, args);
 
-        int geneLength = (int) (long) line.getParsedOptionValue(gene.getLongOpt());
-        int populationSize = (int) (long) line.getParsedOptionValue(population.getLongOpt());
-        int numGenerations = (int) (long) line.getParsedOptionValue(generations.getLongOpt());
-        double crossoverProbability = (double) line.getParsedOptionValue(crossover.getLongOpt());
-        double mutationProbability = (double) line.getParsedOptionValue(mutation.getLongOpt());
+            if (line.hasOption(help.getOpt())) {
+                throw new ParseException(null);
+            }
 
-        ExampleConfiguration config = new ExampleConfiguration.Builder()
-                .setGeneLength(geneLength)
-                .setPopulationSize(populationSize)
-                .setNumGenerations(numGenerations)
-                .setCrossoverProbability(crossoverProbability)
-                .setMutationProbability(mutationProbability)
-                .build();
+            int geneLength = (int) (long) line.getParsedOptionValue(gene.getOpt());
+            int populationSize = (int) (long) line.getParsedOptionValue(population.getOpt());
+            int numGenerations = (int) (long) line.getParsedOptionValue(generations.getOpt());
+            double crossoverProbability = (double) line.getParsedOptionValue(crossover.getOpt());
+            double mutationProbability = (double) line.getParsedOptionValue(mutation.getOpt());
 
-        Example example = new OneMaxExample(config);
-        example.configure();
-        example.execute();
+            ExampleConfiguration config = new ExampleConfiguration.Builder()
+                    .setGeneLength(geneLength)
+                    .setPopulationSize(populationSize)
+                    .setNumGenerations(numGenerations)
+                    .setCrossoverProbability(crossoverProbability)
+                    .setMutationProbability(mutationProbability)
+                    .build();
+
+            Example example = new OneMaxExample(config);
+            example.configure();
+            example.execute();
+        } catch (ParseException ex) {
+            String message = ex.getMessage();
+            if (message != null) {
+                System.err.println(message);
+            }
+
+            PrintWriter pw = new PrintWriter(System.out);
+            int width = 72;
+            String cmdLineSyntax = "sh onemax.sh";
+            String header = "options:";
+            String footer = "example: sh onemax.sh -gl 60 -ps 30 -ng 100 -cp 0.8 -mp 0.02";
+            int leftPad = 2;
+            int descPad = 4;
+            boolean autoUsage = true;
+
+            HelpFormatter formatter = new HelpFormatter();
+            formatter.printHelp(pw, width, cmdLineSyntax, header, options, leftPad, descPad, footer, autoUsage);
+
+            pw.flush();
+        }
     }
 }
