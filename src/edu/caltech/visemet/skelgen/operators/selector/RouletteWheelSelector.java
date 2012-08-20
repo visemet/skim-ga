@@ -6,6 +6,8 @@ import edu.caltech.visemet.skelgen.Population;
 import edu.caltech.visemet.skelgen.SelectionOperator;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -32,11 +34,24 @@ public class RouletteWheelSelector implements SelectionOperator {
     public Chromosome[] select(int count, final FitnessEvaluator evaluator, Population population) {
         Chromosome[] chromosomes = population.toArray();
 
+        final Map<Chromosome, Double> cache = new HashMap<>();
+
         Arrays.sort(chromosomes, new Comparator<Chromosome>() {
 
             @Override
             public int compare(Chromosome c1, Chromosome c2) {
-                return (int) (evaluator.evaluate(c1) - evaluator.evaluate(c2));
+                if (!cache.containsKey(c1)) {
+                    cache.put(c1, evaluator.evaluate(c1));
+                }
+
+                if (!cache.containsKey(c2)) {
+                    cache.put(c2, evaluator.evaluate(c2));
+                }
+
+                double fitness1 = cache.get(c1);
+                double fitness2 = cache.get(c2);
+
+                return (int) (fitness1 - fitness2);
             }
         });
 
@@ -44,7 +59,7 @@ public class RouletteWheelSelector implements SelectionOperator {
 
         double[] fitnesses = new double[length];
         for (int index = 0; index < length; index++) {
-            fitnesses[index] = evaluator.evaluate(chromosomes[index]);
+            fitnesses[index] = cache.get(chromosomes[index]);
         }
 
         normalize(fitnesses);
