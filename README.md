@@ -10,6 +10,8 @@ Motivation
 Structure
 ---------
 
+> All the protein, without any of the fat!
+
 ### Models
 
 Gene = sequence of bases
