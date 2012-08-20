@@ -64,22 +64,31 @@ public class RouletteWheelSelector implements SelectionOperator {
 
         normalize(fitnesses);
 
+        double[] probabilities = new double[count];
+        for (int index = 0; index < count; index++) {
+            probabilities[index] = random.nextDouble();
+        }
+
+        Arrays.sort(probabilities);
+
+        double prevTotalFitness = 0;
+
+        int selectedIndex = 0;
+        int chromosomeIndex = 0;
+
         Chromosome[] selected = new Chromosome[count];
-        for (int selectedIndex = 0; selectedIndex < count; selectedIndex++) {
-            double probability = random.nextDouble();
+        while (selectedIndex < count) {
+            double probability = probabilities[selectedIndex];
+            double fitness = fitnesses[chromosomeIndex];
 
-            int chromosomeIndex = 0;
-            while (chromosomeIndex < length - 1) {
-                if (probability < fitnesses[chromosomeIndex]) {
-                    break;
-                }
-
-                probability -= fitnesses[chromosomeIndex];
-
+            double totalFitness = prevTotalFitness + fitness;
+            if (probability < totalFitness) {
+                selected[selectedIndex] = chromosomes[chromosomeIndex];
+                selectedIndex++;
+            } else {
+                prevTotalFitness = totalFitness;
                 chromosomeIndex++;
             }
-
-            selected[selectedIndex] = chromosomes[chromosomeIndex];
         }
 
         return selected;
