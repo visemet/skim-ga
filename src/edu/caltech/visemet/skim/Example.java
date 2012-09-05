@@ -4,7 +4,7 @@ package edu.caltech.visemet.skim;
  *
  * @author Max Hirschhorn #visemet
  */
-public interface Example {
+public interface Example<T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> {
 
     void execute();
 
@@ -22,11 +22,11 @@ public interface Example {
 
     void setSelector(SelectionOperator selector);
 
-    Population getPopulation();
+    Population<T, S, U, V> getPopulation();
 
-    void setPopulation(Population population);
+    void setPopulation(Population<T, S, U, V> population);
 
-    GeneticAlgorithm getAlgorithm();
+    GeneticAlgorithm<T, S, U, V> getAlgorithm();
 
-    void setAlgorithm(GeneticAlgorithm algorithm);
+    void setAlgorithm(GeneticAlgorithm<T, S, U, V> algorithm);
 }

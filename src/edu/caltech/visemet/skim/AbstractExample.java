@@ -4,12 +4,12 @@ package edu.caltech.visemet.skim;
  *
  * @author Max Hirschhorn #visemet
  */
-public abstract class AbstractExample implements Example {
+public abstract class AbstractExample<T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> implements Example<T, S, U, V> {
 
     private FitnessEvaluator evaluator;
     private SelectionOperator selector;
-    private Population population;
-    private GeneticAlgorithm algorithm;
+    private Population<T, S, U, V> population;
+    private GeneticAlgorithm<T, S, U, V> algorithm;
     private ExampleConfiguration config;
 
     public AbstractExample(ExampleConfiguration config) {
@@ -71,22 +71,22 @@ public abstract class AbstractExample implements Example {
     }
 
     @Override
-    public Population getPopulation() {
+    public Population<T, S, U, V> getPopulation() {
         return population;
     }
 
     @Override
-    public void setPopulation(Population population) {
+    public void setPopulation(Population<T, S, U, V> population) {
         this.population = population;
     }
 
     @Override
-    public GeneticAlgorithm getAlgorithm() {
+    public GeneticAlgorithm<T, S, U, V> getAlgorithm() {
         return algorithm;
     }
 
     @Override
-    public void setAlgorithm(GeneticAlgorithm algorithm) {
+    public void setAlgorithm(GeneticAlgorithm<T, S, U, V> algorithm) {
         this.algorithm = algorithm;
     }
 }

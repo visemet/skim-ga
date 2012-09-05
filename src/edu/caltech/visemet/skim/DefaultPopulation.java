@@ -8,11 +8,11 @@ import java.util.Random;
  *
  * @author Max Hirschhorn #visemet
  */
-public class DefaultPopulation implements Population {
+public class DefaultPopulation<T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> implements Population<T, S, U, V> {
 
-    private Collection<Chromosome> chromosomes;
+    private Collection<V> chromosomes;
 
-    public DefaultPopulation(Collection<Chromosome> chromosomes) {
+    public DefaultPopulation(Collection<V> chromosomes) {
         this.chromosomes = chromosomes;
     }
 
@@ -20,14 +20,14 @@ public class DefaultPopulation implements Population {
     public void initialize() {
         Random random = new Random();
 
-        for (Chromosome chromosome : chromosomes) {
+        for (V chromosome : chromosomes) {
             chromosome.initialize();
             chromosome.randomize(random);
         }
     }
 
     @Override
-    public boolean add(Chromosome chromosome) {
+    public boolean add(V chromosome) {
         return chromosomes.add(chromosome);
     }
 
@@ -37,12 +37,12 @@ public class DefaultPopulation implements Population {
     }
 
     @Override
-    public Iterator<Chromosome> iterator() {
+    public Iterator<V> iterator() {
         return chromosomes.iterator();
     }
 
     @Override
-    public Chromosome[] toArray() {
-        return chromosomes.toArray(new DefaultChromosome[0]);
+    public V[] toArray() {
+        return (V[]) chromosomes.toArray(new DefaultChromosome[0]);
     }
 }

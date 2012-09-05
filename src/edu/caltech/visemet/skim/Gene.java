@@ -6,21 +6,21 @@ import java.util.Random;
  *
  * @author Max Hirschhorn #visemet
  */
-public interface Gene<T extends Base> {
+public interface Gene<T, S extends Base<T>> {
 
     void initialize();
 
     void randomize(Random random);
 
-    T[] getSequence();
+    S[] getSequence();
 
-    void setSequence(T[] sequence);
+    void setSequence(S[] sequence);
 
-    T getBaseAt(int index);
+    S getBaseAt(int index);
 
-    void setBaseAt(int index, T base);
+    void setBaseAt(int index, S base);
 
     int length();
 
-    Gene<T> copy();
+    Gene<T, S> copy();
 }

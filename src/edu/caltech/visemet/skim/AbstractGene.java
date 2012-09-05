@@ -6,38 +6,38 @@ import java.util.Random;
  *
  * @author Max Hirschhorn #visemet
  */
-public abstract class AbstractGene<T extends Base> implements Gene<T> {
+public abstract class AbstractGene<T, B extends Base<T>> implements Gene<T, B> {
 
-    private T[] sequence;
+    private B[] sequence;
 
-    public AbstractGene(T[] sequence) {
+    public AbstractGene(B[] sequence) {
         this.sequence = sequence;
     }
 
     @Override
     public void randomize(Random random) {
-        for (T base : sequence) {
+        for (B base : sequence) {
             base.randomize(random);
         }
     }
 
     @Override
-    public T[] getSequence() {
+    public B[] getSequence() {
         return sequence;
     }
 
     @Override
-    public void setSequence(T[] sequence) {
+    public void setSequence(B[] sequence) {
         this.sequence = sequence;
     }
 
     @Override
-    public T getBaseAt(int index) {
+    public B getBaseAt(int index) {
         return sequence[index];
     }
 
     @Override
-    public void setBaseAt(int index, T base) {
+    public void setBaseAt(int index, B base) {
         sequence[index] = base;
     }
 

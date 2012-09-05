@@ -6,15 +6,15 @@ import java.util.Iterator;
  *
  * @author Max Hirschhorn #visemet
  */
-public interface Population {
+public interface Population<T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> {
 
     void initialize();
 
-    boolean add(Chromosome chromosome);
+    boolean add(V chromosome);
 
     int size();
 
-    Iterator<Chromosome> iterator();
+    Iterator<V> iterator();
 
-    Chromosome[] toArray();
+    V[] toArray();
 }

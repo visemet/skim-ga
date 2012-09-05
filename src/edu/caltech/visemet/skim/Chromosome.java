@@ -6,15 +6,15 @@ import java.util.Random;
  *
  * @author Max Hirschhorn #visemet
  */
-public interface Chromosome {
+public interface Chromosome<T, S extends Base<T>, U extends Gene<T, S>> {
 
     void initialize();
 
     void randomize(Random random);
 
-    Gene getGeneAt(int index);
+    Gene<T, S> getGeneAt(int index);
 
-    void setGeneAt(int index, Gene gene);
+    void setGeneAt(int index, Gene<T, S> gene);
 
     int length();
 }

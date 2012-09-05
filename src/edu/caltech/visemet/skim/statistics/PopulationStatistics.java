@@ -1,7 +1,9 @@
 package edu.caltech.visemet.skim.statistics;
 
+import edu.caltech.visemet.skim.Base;
 import edu.caltech.visemet.skim.Chromosome;
 import edu.caltech.visemet.skim.FitnessEvaluator;
+import edu.caltech.visemet.skim.Gene;
 import edu.caltech.visemet.skim.Population;
 import java.util.Iterator;
 
@@ -11,18 +13,18 @@ import java.util.Iterator;
  */
 public class PopulationStatistics {
 
-    public static Chromosome getLeastFitChromosome(FitnessEvaluator evaluator, Population population) {
-        Iterator<Chromosome> iterator = population.iterator();
+    public static <T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> V getLeastFitChromosome(FitnessEvaluator evaluator, Population<T, S, U, V> population) {
+        Iterator<V> iterator = population.iterator();
 
         if (!iterator.hasNext()) {
             throw new IllegalArgumentException("population is empty");
         }
 
-        Chromosome leastFitChromosome = iterator.next();
+        V leastFitChromosome = iterator.next();
         double minFitness = evaluator.evaluate(leastFitChromosome);
 
         while (iterator.hasNext()) {
-            Chromosome chromosome = iterator.next();
+            V chromosome = iterator.next();
             double fitness = evaluator.evaluate(chromosome);
 
             if (fitness < minFitness) {
@@ -34,18 +36,18 @@ public class PopulationStatistics {
         return leastFitChromosome;
     }
 
-    public static Chromosome getMostFitChromosome(FitnessEvaluator evaluator, Population population) {
-        Iterator<Chromosome> iterator = population.iterator();
+    public static <T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> V getMostFitChromosome(FitnessEvaluator evaluator, Population<T, S, U, V> population) {
+        Iterator<V> iterator = population.iterator();
 
         if (!iterator.hasNext()) {
             throw new IllegalArgumentException("population is empty");
         }
 
-        Chromosome mostFitChromosome = iterator.next();
+        V mostFitChromosome = iterator.next();
         double maxFitness = evaluator.evaluate(mostFitChromosome);
 
         while (iterator.hasNext()) {
-            Chromosome chromosome = iterator.next();
+            V chromosome = iterator.next();
             double fitness = evaluator.evaluate(chromosome);
 
             if (fitness > maxFitness) {
@@ -57,12 +59,12 @@ public class PopulationStatistics {
         return mostFitChromosome;
     }
 
-    public static double getAverageFitness(FitnessEvaluator evaluator, Population population) {
+    public static <T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> double getAverageFitness(FitnessEvaluator evaluator, Population<T, S, U, V> population) {
         double sum = 0;
 
-        Iterator<Chromosome> iterator = population.iterator();
+        Iterator<V> iterator = population.iterator();
         while (iterator.hasNext()) {
-            Chromosome chromosome = iterator.next();
+            V chromosome = iterator.next();
             double fitness = evaluator.evaluate(chromosome);
 
             sum += fitness;

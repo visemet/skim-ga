@@ -7,7 +7,7 @@ import edu.caltech.visemet.skim.Base;
  *
  * @author Max Hirschhorn #visemet
  */
-public class BooleanGene extends AbstractGene<BooleanBase> {
+public class BooleanGene extends AbstractGene<Boolean, BooleanBase> {
 
     public BooleanGene(int length) {
         super(new BooleanBase[length]);

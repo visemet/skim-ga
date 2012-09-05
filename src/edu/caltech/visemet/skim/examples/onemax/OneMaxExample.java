@@ -22,7 +22,7 @@ import org.apache.commons.cli.PosixParser;
  *
  * @author Max Hirschhorn #visemet
  */
-public class OneMaxExample extends AbstractExample {
+public class OneMaxExample<T extends Boolean, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> extends AbstractExample<T, S, U, V> {
 
     public OneMaxExample(ExampleConfiguration config) {
         super(config);
@@ -40,16 +40,16 @@ public class OneMaxExample extends AbstractExample {
 
     @Override
     protected void createPopulation() {
-        setPopulation(new DefaultPopulation(new ArrayList<Chromosome>()));
+        setPopulation(new DefaultPopulation<>(new ArrayList<V>()));
 
-        Population population = getPopulation();
+        Population<T, S, U, V> population = getPopulation();
         ExampleConfiguration config = getConfig();
 
         int geneLength = config.getGeneLength();
         int populationSize = config.getPopulationSize();
 
         for (int count = 0; count < populationSize; count++) {
-            population.add(new DefaultChromosome(new Gene[] {
+            population.add((V) new DefaultChromosome<T, S, U>((U[]) new Gene[] {
                 new BooleanGene(geneLength)
             }));
         }
@@ -63,13 +63,13 @@ public class OneMaxExample extends AbstractExample {
         double crossoverProbability = config.getCrossoverProbability();
         double mutationProbability = config.getMutationProbability();
 
-        setAlgorithm(new FixedTerminationGeneticAlgorithm(numGenerations,
-                new GeneticAlgorithmConfiguration.Builder()
+        setAlgorithm(new FixedTerminationGeneticAlgorithm<T, S, U, V>(numGenerations,
+                new GeneticAlgorithmConfiguration.Builder<T, S, U>()
                         .setShouldRetainMostFit(true)
                         .setCrossoverProbability(crossoverProbability)
                         .setMutationProbability(mutationProbability)
-                        .setCrossover(NpointCrossover.ONE_POINT)
-                        .setMutator(InversionMutator.INSTANCE)
+                        .setCrossover(new NpointCrossover<T, S, U>(1))
+                        .setMutator(new InversionMutator<T, S, U>())
                         .build()));
     }
 
@@ -78,7 +78,7 @@ public class OneMaxExample extends AbstractExample {
         super.execute();
 
         FitnessEvaluator evaluator = getEvaluator();
-        Population population = getPopulation();
+        Population<T, S, U, V> population = getPopulation();
 
         Chromosome mostFit = PopulationStatistics.getMostFitChromosome(evaluator, population);
         System.out.printf("chromosome: %s\nfitness: %.6f\n", mostFit, evaluator.evaluate(mostFit));

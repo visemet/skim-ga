@@ -2,28 +2,29 @@ package edu.caltech.visemet.skim;
 
 import edu.caltech.visemet.skim.statistics.PopulationStatistics;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
  * @author Max Hirschhorn #visemet
  */
-public abstract class AbstractGeneticAlgorithm implements GeneticAlgorithm {
+public abstract class AbstractGeneticAlgorithm<T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> implements GeneticAlgorithm<T, S, U, V> {
 
-    private GeneticAlgorithmConfiguration configuration;
+    private GeneticAlgorithmConfiguration<T, S, U> configuration;
 
-    public AbstractGeneticAlgorithm(GeneticAlgorithmConfiguration configuration) {
+    public AbstractGeneticAlgorithm(GeneticAlgorithmConfiguration<T, S, U> configuration) {
         this.configuration = configuration;
     }
 
     @Override
-    public Population evolve(FitnessEvaluator evaluator, SelectionOperator selector, Population population) {
-        Population nextPopulation = new DefaultPopulation(new ArrayList<Chromosome>());
+    public Population<T, S, U, V> evolve(FitnessEvaluator evaluator, SelectionOperator selector, Population<T, S, U, V> population) {
+        Population<T, S, U, V> nextPopulation = new DefaultPopulation<>(new ArrayList<V>());
 
         double crossoverProbability = configuration.getCrossoverProbability();
         double mutationProbability = configuration.getMutationProbability();
 
-        CrossoverOperator crossover = configuration.getCrossover();
-        MutationOperator mutator = configuration.getMutator();
+        CrossoverOperator<T, S, U> crossover = configuration.getCrossover();
+        MutationOperator<T, S, U> mutator = configuration.getMutator();
 
         int count = population.size();
         if (configuration.shouldRetainMostFit()) {
@@ -31,19 +32,19 @@ public abstract class AbstractGeneticAlgorithm implements GeneticAlgorithm {
             count--;
         }
 
-        Chromosome[] chromosomes = selector.select(count, evaluator, population);
+        V[] chromosomes = (V[]) selector.select(count, evaluator, population);
         for (int chromosomeIndex = 0; chromosomeIndex < chromosomes.length; chromosomeIndex++) {
-            Chromosome parent = chromosomes[chromosomeIndex];
-            Chromosome otherParent = chromosomes[(chromosomeIndex + 1) % chromosomes.length];
+            V parent = chromosomes[chromosomeIndex];
+            V otherParent = chromosomes[(chromosomeIndex + 1) % chromosomes.length];
 
             int chromosomeLength = Math.min(parent.length(), otherParent.length());
-            Chromosome child = new DefaultChromosome(new Gene[chromosomeLength]);
+            V child = (V) new DefaultChromosome<T, S, U>((U[]) new Gene[chromosomeLength]);
 
             for (int geneIndex = 0; geneIndex < chromosomeLength; geneIndex++) {
-                Gene parentGene = parent.getGeneAt(geneIndex);
-                Gene otherParentGene = otherParent.getGeneAt(geneIndex);
+                U parentGene = (U) parent.getGeneAt(geneIndex);
+                U otherParentGene = (U) otherParent.getGeneAt(geneIndex);
 
-                Gene childGene = crossover.crossover(crossoverProbability, parentGene, otherParentGene);
+                U childGene = crossover.crossover(crossoverProbability, parentGene, Collections.singletonList(otherParentGene));
                 mutator.mutate(mutationProbability, childGene);
 
                 child.setGeneAt(geneIndex, childGene);

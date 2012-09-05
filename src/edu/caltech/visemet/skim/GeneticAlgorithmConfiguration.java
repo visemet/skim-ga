@@ -7,11 +7,11 @@ import edu.caltech.visemet.skim.operators.mutator.RandomMutator;
  *
  * @author Max Hirschhorn #visemet
  */
-public class GeneticAlgorithmConfiguration {
+public class GeneticAlgorithmConfiguration<T, S extends Base<T>, U extends Gene<T, S>> {
 
-    private Builder builder;
+    private Builder<T, S, U> builder;
 
-    public GeneticAlgorithmConfiguration(Builder builder) {
+    public GeneticAlgorithmConfiguration(Builder<T, S, U> builder) {
         this.builder = builder;
     }
 
@@ -23,11 +23,11 @@ public class GeneticAlgorithmConfiguration {
         return builder.mutationProbability;
     }
 
-    public CrossoverOperator getCrossover() {
+    public CrossoverOperator<T, S, U> getCrossover() {
         return builder.crossover;
     }
 
-    public MutationOperator getMutator() {
+    public MutationOperator<T, S, U> getMutator() {
         return builder.mutator;
     }
 
@@ -35,7 +35,7 @@ public class GeneticAlgorithmConfiguration {
         return builder.shouldRetainMostFit;
     }
 
-    public static class Builder {
+    public static class Builder<T, S extends Base<T>, U extends Gene<T, S>> {
 
         private boolean shouldRetainMostFit;
 
@@ -43,45 +43,45 @@ public class GeneticAlgorithmConfiguration {
 
         private double mutationProbability;
 
-        private CrossoverOperator crossover;
+        private CrossoverOperator<T, S, U> crossover;
 
-        private MutationOperator mutator;
+        private MutationOperator<T, S, U> mutator;
 
         public Builder() {
             shouldRetainMostFit = true;
             crossoverProbability = 1;
             mutationProbability = 0;
-            crossover = NpointCrossover.ONE_POINT;
-            mutator = RandomMutator.INSTANCE;
+            crossover = new NpointCrossover<>(1);
+            mutator = new RandomMutator<>();
         }
 
-        public Builder setShouldRetainMostFit(boolean shouldRetainMostFit) {
+        public Builder<T, S, U> setShouldRetainMostFit(boolean shouldRetainMostFit) {
             this.shouldRetainMostFit = shouldRetainMostFit;
             return this;
         }
 
-        public Builder setCrossoverProbability(double crossoverProbability) {
+        public Builder<T, S, U> setCrossoverProbability(double crossoverProbability) {
             this.crossoverProbability = crossoverProbability;
             return this;
         }
 
-        public Builder setMutationProbability(double mutationProbability) {
+        public Builder<T, S, U> setMutationProbability(double mutationProbability) {
             this.mutationProbability = mutationProbability;
             return this;
         }
 
-        public Builder setCrossover(CrossoverOperator crossover) {
+        public Builder<T, S, U> setCrossover(CrossoverOperator<T, S, U> crossover) {
             this.crossover = crossover;
             return this;
         }
 
-        public Builder setMutator(MutationOperator mutator) {
+        public Builder<T, S, U> setMutator(MutationOperator<T, S, U> mutator) {
             this.mutator = mutator;
             return this;
         }
 
-        public GeneticAlgorithmConfiguration build() {
-            return new GeneticAlgorithmConfiguration(this);
+        public GeneticAlgorithmConfiguration<T, S, U> build() {
+            return new GeneticAlgorithmConfiguration<>(this);
         }
     }
 }

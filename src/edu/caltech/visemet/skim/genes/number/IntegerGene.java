@@ -6,7 +6,7 @@ import edu.caltech.visemet.skim.AbstractGene;
  *
  * @author Max Hirschhorn #visemet
  */
-public class IntegerGene extends AbstractGene<IntegerBase> {
+public class IntegerGene extends AbstractGene<Integer, IntegerBase> {
 
     public IntegerGene(int length) {
         this(new IntegerBase[length]);

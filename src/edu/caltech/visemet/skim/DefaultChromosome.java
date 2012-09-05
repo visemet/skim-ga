@@ -6,35 +6,35 @@ import java.util.Random;
  *
  * @author Max Hirschhorn #visemet
  */
-public class DefaultChromosome implements Chromosome {
+public class DefaultChromosome<T, S extends Base<T>, U extends Gene<T, S>> implements Chromosome<T, S, U> {
 
-    private Gene[] genes;
+    private Gene<T, S>[] genes;
 
-    public DefaultChromosome(Gene[] genes) {
+    public DefaultChromosome(Gene<T, S>[] genes) {
         this.genes = genes;
     }
 
     @Override
     public void initialize() {
-        for (Gene gene : genes) {
+        for (Gene<T, S> gene : genes) {
             gene.initialize();
         }
     }
 
     @Override
     public void randomize(Random random) {
-        for (Gene gene : genes) {
+        for (Gene<T, S> gene : genes) {
             gene.randomize(random);
         }
     }
 
     @Override
-    public Gene getGeneAt(int index) {
+    public Gene<T, S> getGeneAt(int index) {
         return genes[index];
     }
 
     @Override
-    public void setGeneAt(int index, Gene gene) {
+    public void setGeneAt(int index, Gene<T, S> gene) {
         genes[index] = gene;
     }
 
