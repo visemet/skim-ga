@@ -2,6 +2,7 @@ package edu.caltech.visemet.skim.examples.onemax;
 
 import edu.caltech.visemet.skim.*;
 import edu.caltech.visemet.skim.algorithms.FixedTerminationGeneticAlgorithm;
+import edu.caltech.visemet.skim.genes.BooleanBase;
 import edu.caltech.visemet.skim.genes.BooleanGene;
 import edu.caltech.visemet.skim.operators.crossover.NpointCrossover;
 import edu.caltech.visemet.skim.operators.mutator.InversionMutator;
@@ -9,6 +10,7 @@ import edu.caltech.visemet.skim.operators.selector.RouletteWheelSelector;
 import edu.caltech.visemet.skim.statistics.PopulationStatistics;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -30,12 +32,12 @@ public class OneMaxExample<T extends Boolean, S extends Base<T>, U extends Gene<
 
     @Override
     protected void createEvaluator() {
-        setEvaluator(new OneMaxFitnessFunction());
+        setEvaluator(new OneMaxFitnessFunction<T, S, U, V>());
     }
 
     @Override
     protected void createSelector() {
-        setSelector(new RouletteWheelSelector());
+        setSelector(new RouletteWheelSelector<T, S, U, V>());
     }
 
     @Override
@@ -49,9 +51,10 @@ public class OneMaxExample<T extends Boolean, S extends Base<T>, U extends Gene<
         int populationSize = config.getPopulationSize();
 
         for (int count = 0; count < populationSize; count++) {
-            population.add((V) new DefaultChromosome<T, S, U>((U[]) new Gene[] {
-                new BooleanGene(geneLength)
-            }));
+            List<U> genes = new ArrayList<>();
+
+            genes.add((U) new BooleanGene(geneLength));
+            population.add((V) new DefaultChromosome<>(genes));
         }
     }
 
@@ -77,10 +80,10 @@ public class OneMaxExample<T extends Boolean, S extends Base<T>, U extends Gene<
     public void execute() {
         super.execute();
 
-        FitnessEvaluator evaluator = getEvaluator();
+        FitnessEvaluator<T, S, U, V> evaluator = getEvaluator();
         Population<T, S, U, V> population = getPopulation();
 
-        Chromosome mostFit = PopulationStatistics.getMostFitChromosome(evaluator, population);
+        V mostFit = PopulationStatistics.getMostFitChromosome(evaluator, population);
         System.out.printf("chromosome: %s\nfitness: %.6f\n", mostFit, evaluator.evaluate(mostFit));
     }
 
@@ -168,7 +171,7 @@ public class OneMaxExample<T extends Boolean, S extends Base<T>, U extends Gene<
                     .setMutationProbability(mutationProbability)
                     .build();
 
-            Example example = new OneMaxExample(config);
+            Example<Boolean, BooleanBase, BooleanGene, DefaultChromosome<Boolean, BooleanBase, BooleanGene>> example = new OneMaxExample<>(config);
             example.configure();
             example.execute();
         } catch (ParseException ex) {

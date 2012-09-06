@@ -1,7 +1,9 @@
 package edu.caltech.visemet.skim;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -42,7 +44,7 @@ public class DefaultPopulation<T, S extends Base<T>, U extends Gene<T, S>, V ext
     }
 
     @Override
-    public V[] toArray() {
-        return (V[]) chromosomes.toArray(new DefaultChromosome[0]);
+    public List<V> toList() {
+        return new ArrayList<>(chromosomes);
     }
 }

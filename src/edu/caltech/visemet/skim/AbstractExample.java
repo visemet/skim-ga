@@ -6,8 +6,8 @@ package edu.caltech.visemet.skim;
  */
 public abstract class AbstractExample<T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> implements Example<T, S, U, V> {
 
-    private FitnessEvaluator evaluator;
-    private SelectionOperator selector;
+    private FitnessEvaluator<T, S, U, V> evaluator;
+    private SelectionOperator<T, S, U, V> selector;
     private Population<T, S, U, V> population;
     private GeneticAlgorithm<T, S, U, V> algorithm;
     private ExampleConfiguration config;
@@ -51,22 +51,22 @@ public abstract class AbstractExample<T, S extends Base<T>, U extends Gene<T, S>
     }
 
     @Override
-    public FitnessEvaluator getEvaluator() {
+    public FitnessEvaluator<T, S, U, V> getEvaluator() {
         return evaluator;
     }
 
     @Override
-    public void setEvaluator(FitnessEvaluator evaluator) {
+    public void setEvaluator(FitnessEvaluator<T, S, U, V> evaluator) {
         this.evaluator = evaluator;
     }
 
     @Override
-    public SelectionOperator getSelector() {
+    public SelectionOperator<T, S, U, V> getSelector() {
         return selector;
     }
 
     @Override
-    public void setSelector(SelectionOperator selector) {
+    public void setSelector(SelectionOperator<T, S, U, V> selector) {
         this.selector = selector;
     }
 

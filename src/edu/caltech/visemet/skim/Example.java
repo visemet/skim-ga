@@ -14,13 +14,13 @@ public interface Example<T, S extends Base<T>, U extends Gene<T, S>, V extends C
 
     void setConfig(ExampleConfiguration config);
 
-    FitnessEvaluator getEvaluator();
+    FitnessEvaluator<T, S, U, V> getEvaluator();
 
-    void setEvaluator(FitnessEvaluator evaluator);
+    void setEvaluator(FitnessEvaluator<T, S, U, V> evaluator);
 
-    SelectionOperator getSelector();
+    SelectionOperator<T, S, U, V> getSelector();
 
-    void setSelector(SelectionOperator selector);
+    void setSelector(SelectionOperator<T, S, U, V> selector);
 
     Population<T, S, U, V> getPopulation();
 

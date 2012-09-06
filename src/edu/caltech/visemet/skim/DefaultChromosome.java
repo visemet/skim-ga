@@ -1,5 +1,6 @@
 package edu.caltech.visemet.skim;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -8,39 +9,39 @@ import java.util.Random;
  */
 public class DefaultChromosome<T, S extends Base<T>, U extends Gene<T, S>> implements Chromosome<T, S, U> {
 
-    private Gene<T, S>[] genes;
+    private List<U> genes;
 
-    public DefaultChromosome(Gene<T, S>[] genes) {
+    public DefaultChromosome(List<U> genes) {
         this.genes = genes;
     }
 
     @Override
     public void initialize() {
-        for (Gene<T, S> gene : genes) {
+        for (U gene : genes) {
             gene.initialize();
         }
     }
 
     @Override
     public void randomize(Random random) {
-        for (Gene<T, S> gene : genes) {
+        for (U gene : genes) {
             gene.randomize(random);
         }
     }
 
     @Override
-    public Gene<T, S> getGeneAt(int index) {
-        return genes[index];
+    public U getGeneAt(int index) {
+        return genes.get(index);
     }
 
     @Override
-    public void setGeneAt(int index, Gene<T, S> gene) {
-        genes[index] = gene;
+    public void setGeneAt(int index, U gene) {
+        genes.set(index, gene);
     }
 
     @Override
     public int length() {
-        return genes.length;
+        return genes.size();
     }
 
     @Override

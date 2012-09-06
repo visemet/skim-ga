@@ -1,12 +1,17 @@
 package edu.caltech.visemet.skim.operators.selector;
 
+import edu.caltech.visemet.skim.Base;
 import edu.caltech.visemet.skim.Chromosome;
 import edu.caltech.visemet.skim.FitnessEvaluator;
+import edu.caltech.visemet.skim.Gene;
 import edu.caltech.visemet.skim.Population;
 import edu.caltech.visemet.skim.SelectionOperator;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -14,7 +19,7 @@ import java.util.Random;
  *
  * @author Max Hirschhorn #visemet
  */
-public class RouletteWheelSelector implements SelectionOperator {
+public class RouletteWheelSelector<T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> implements SelectionOperator<T, S, U, V> {
 
     private Random random = new Random();
 
@@ -31,15 +36,15 @@ public class RouletteWheelSelector implements SelectionOperator {
     }
 
     @Override
-    public Chromosome[] select(int count, final FitnessEvaluator evaluator, Population population) {
-        Chromosome[] chromosomes = population.toArray();
+    public List<V> select(int count, final FitnessEvaluator<T, S, U, V> evaluator, Population<T, S, U, V> population) {
+        List<V> chromosomes = population.toList();
 
         final Map<Chromosome, Double> cache = new HashMap<>();
 
-        Arrays.sort(chromosomes, new Comparator<Chromosome>() {
+        Collections.sort(chromosomes, new Comparator<V>() {
 
             @Override
-            public int compare(Chromosome c1, Chromosome c2) {
+            public int compare(V c1, V c2) {
                 if (!cache.containsKey(c1)) {
                     cache.put(c1, evaluator.evaluate(c1));
                 }
@@ -59,7 +64,7 @@ public class RouletteWheelSelector implements SelectionOperator {
 
         double[] fitnesses = new double[length];
         for (int index = 0; index < length; index++) {
-            fitnesses[index] = cache.get(chromosomes[index]);
+            fitnesses[index] = cache.get(chromosomes.get(index));
         }
 
         normalize(fitnesses);
@@ -76,14 +81,14 @@ public class RouletteWheelSelector implements SelectionOperator {
         int selectedIndex = 0;
         int chromosomeIndex = 0;
 
-        Chromosome[] selected = new Chromosome[count];
+        List<V> selected = new ArrayList<>(Collections.nCopies(count, (V) null));
         while (selectedIndex < count) {
             double probability = probabilities[selectedIndex];
             double fitness = fitnesses[chromosomeIndex];
 
             double totalFitness = prevTotalFitness + fitness;
             if (probability < totalFitness) {
-                selected[selectedIndex] = chromosomes[chromosomeIndex];
+                selected.set(selectedIndex, chromosomes.get(chromosomeIndex));
                 selectedIndex++;
             } else {
                 prevTotalFitness = totalFitness;

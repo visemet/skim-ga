@@ -2,6 +2,7 @@ package edu.caltech.visemet.skim.genes;
 
 import edu.caltech.visemet.skim.AbstractGene;
 import edu.caltech.visemet.skim.Base;
+import java.util.Arrays;
 
 /**
  *
@@ -10,7 +11,7 @@ import edu.caltech.visemet.skim.Base;
 public class BooleanGene extends AbstractGene<Boolean, BooleanBase> {
 
     public BooleanGene(int length) {
-        super(new BooleanBase[length]);
+        super(Arrays.asList(new BooleanBase[length]));
     }
 
     @Override

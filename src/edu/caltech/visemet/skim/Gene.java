@@ -1,5 +1,6 @@
 package edu.caltech.visemet.skim;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -12,9 +13,9 @@ public interface Gene<T, S extends Base<T>> {
 
     void randomize(Random random);
 
-    S[] getSequence();
+    List<S> getSequence();
 
-    void setSequence(S[] sequence);
+    void setSequence(List<S> sequence);
 
     S getBaseAt(int index);
 

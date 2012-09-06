@@ -1,49 +1,50 @@
 package edu.caltech.visemet.skim;
 
+import java.util.List;
 import java.util.Random;
 
 /**
  *
  * @author Max Hirschhorn #visemet
  */
-public abstract class AbstractGene<T, B extends Base<T>> implements Gene<T, B> {
+public abstract class AbstractGene<T, S extends Base<T>> implements Gene<T, S> {
 
-    private B[] sequence;
+    private List<S> sequence;
 
-    public AbstractGene(B[] sequence) {
+    public AbstractGene(List<S> sequence) {
         this.sequence = sequence;
     }
 
     @Override
     public void randomize(Random random) {
-        for (B base : sequence) {
+        for (S base : sequence) {
             base.randomize(random);
         }
     }
 
     @Override
-    public B[] getSequence() {
+    public List<S> getSequence() {
         return sequence;
     }
 
     @Override
-    public void setSequence(B[] sequence) {
+    public void setSequence(List<S> sequence) {
         this.sequence = sequence;
     }
 
     @Override
-    public B getBaseAt(int index) {
-        return sequence[index];
+    public S getBaseAt(int index) {
+        return sequence.get(index);
     }
 
     @Override
-    public void setBaseAt(int index, B base) {
-        sequence[index] = base;
+    public void setBaseAt(int index, S base) {
+        sequence.set(index, base);
     }
 
     @Override
     public int length() {
-        return sequence.length;
+        return sequence.size();
     }
 
     @Override

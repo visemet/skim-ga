@@ -3,6 +3,7 @@ package edu.caltech.visemet.skim;
 import edu.caltech.visemet.skim.statistics.PopulationStatistics;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -17,7 +18,7 @@ public abstract class AbstractGeneticAlgorithm<T, S extends Base<T>, U extends G
     }
 
     @Override
-    public Population<T, S, U, V> evolve(FitnessEvaluator evaluator, SelectionOperator selector, Population<T, S, U, V> population) {
+    public Population<T, S, U, V> evolve(FitnessEvaluator<T, S, U, V> evaluator, SelectionOperator<T, S, U, V> selector, Population<T, S, U, V> population) {
         Population<T, S, U, V> nextPopulation = new DefaultPopulation<>(new ArrayList<V>());
 
         double crossoverProbability = configuration.getCrossoverProbability();
@@ -32,13 +33,13 @@ public abstract class AbstractGeneticAlgorithm<T, S extends Base<T>, U extends G
             count--;
         }
 
-        V[] chromosomes = (V[]) selector.select(count, evaluator, population);
-        for (int chromosomeIndex = 0; chromosomeIndex < chromosomes.length; chromosomeIndex++) {
-            V parent = chromosomes[chromosomeIndex];
-            V otherParent = chromosomes[(chromosomeIndex + 1) % chromosomes.length];
+        List<V> chromosomes = selector.select(count, evaluator, population);
+        for (int chromosomeIndex = 0; chromosomeIndex < chromosomes.size(); chromosomeIndex++) {
+            V parent = chromosomes.get(chromosomeIndex);
+            V otherParent = chromosomes.get((chromosomeIndex + 1) % chromosomes.size());
 
             int chromosomeLength = Math.min(parent.length(), otherParent.length());
-            V child = (V) new DefaultChromosome<T, S, U>((U[]) new Gene[chromosomeLength]);
+            V child = (V) new DefaultChromosome<>(new ArrayList<>(Collections.nCopies(chromosomeLength, (U) null)));
 
             for (int geneIndex = 0; geneIndex < chromosomeLength; geneIndex++) {
                 U parentGene = (U) parent.getGeneAt(geneIndex);

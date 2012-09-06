@@ -1,6 +1,7 @@
 package edu.caltech.visemet.skim;
 
 import java.util.Iterator;
+import java.util.List;
 
 /**
  *
@@ -16,5 +17,5 @@ public interface Population<T, S extends Base<T>, U extends Gene<T, S>, V extend
 
     Iterator<V> iterator();
 
-    V[] toArray();
+    List<V> toList();
 }

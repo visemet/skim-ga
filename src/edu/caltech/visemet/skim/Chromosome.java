@@ -12,9 +12,9 @@ public interface Chromosome<T, S extends Base<T>, U extends Gene<T, S>> {
 
     void randomize(Random random);
 
-    Gene<T, S> getGeneAt(int index);
+    U getGeneAt(int index);
 
-    void setGeneAt(int index, Gene<T, S> gene);
+    void setGeneAt(int index, U gene);
 
     int length();
 }

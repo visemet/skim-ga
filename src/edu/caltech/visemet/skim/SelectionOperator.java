@@ -1,10 +1,12 @@
 package edu.caltech.visemet.skim;
 
+import java.util.List;
+
 /**
  *
  * @author Max Hirschhorn #visemet
  */
-public interface SelectionOperator {
+public interface SelectionOperator<T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> {
 
-    Chromosome[] select(int count, FitnessEvaluator evaluator, Population population);
+    List<V> select(int count, FitnessEvaluator<T, S, U, V> evaluator, Population<T, S, U, V> population);
 }

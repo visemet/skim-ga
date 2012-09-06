@@ -1,6 +1,7 @@
 package edu.caltech.visemet.skim.genes.number;
 
 import edu.caltech.visemet.skim.AbstractGene;
+import java.util.Arrays;
 
 /**
  *
@@ -9,11 +10,7 @@ import edu.caltech.visemet.skim.AbstractGene;
 public class IntegerGene extends AbstractGene<Integer, IntegerBase> {
 
     public IntegerGene(int length) {
-        this(new IntegerBase[length]);
-    }
-
-    public IntegerGene(IntegerBase[] sequence) {
-        super(sequence);
+        super(Arrays.asList(new IntegerBase[length]));
     }
 
     @Override

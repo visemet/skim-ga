@@ -18,7 +18,7 @@ public class FixedTerminationGeneticAlgorithm<T, S extends Base<T>, U extends Ge
     }
 
     @Override
-    public Population<T, S, U, V> evolve(FitnessEvaluator evaluator, SelectionOperator selector, Population<T, S, U, V> population) {
+    public Population<T, S, U, V> evolve(FitnessEvaluator<T, S, U, V> evaluator, SelectionOperator<T, S, U, V> selector, Population<T, S, U, V> population) {
         generationCount++;
 
         return super.evolve(evaluator, selector, population);
