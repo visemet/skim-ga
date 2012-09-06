@@ -1,34 +1,36 @@
 package edu.caltech.visemet.skim.genes.number;
 
 import edu.caltech.visemet.skim.AbstractGene;
-import java.util.Arrays;
+import edu.caltech.visemet.skim.NumberBase;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
  * @author Max Hirschhorn #visemet
  */
-public class IntegerGene extends AbstractGene<Integer, IntegerBase> {
+public class IntegerGene<T extends Integer, U extends NumberBase<T>> extends AbstractGene<T, U> {
 
     public IntegerGene(int length) {
-        super(Arrays.asList(new IntegerBase[length]));
+        super(new ArrayList<>(Collections.nCopies(length, (U) null)));
     }
 
     @Override
     public void initialize() {
         int length = length();
         for (int index = 0; index < length; index++) {
-           setBaseAt(index, new IntegerBase());
+            setBaseAt(index, (U) new IntegerBase());
         }
     }
 
     @Override
-    public IntegerGene copy() {
+    public IntegerGene<T, U> copy() {
         int length = length();
 
-        IntegerGene copy = new IntegerGene(length);
+        IntegerGene<T, U> copy = new IntegerGene<>(length);
 
         for (int index = 0; index < length; index++) {
-            copy.setBaseAt(index, getBaseAt(index).copy());
+            copy.setBaseAt(index, (U) getBaseAt(index).copy());
         }
 
         return copy;

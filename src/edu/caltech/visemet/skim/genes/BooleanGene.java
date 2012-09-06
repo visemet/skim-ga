@@ -2,34 +2,35 @@ package edu.caltech.visemet.skim.genes;
 
 import edu.caltech.visemet.skim.AbstractGene;
 import edu.caltech.visemet.skim.Base;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
  * @author Max Hirschhorn #visemet
  */
-public class BooleanGene extends AbstractGene<Boolean, BooleanBase> {
+public class BooleanGene<T extends Boolean, U extends Base<T>> extends AbstractGene<T, U> {
 
     public BooleanGene(int length) {
-        super(Arrays.asList(new BooleanBase[length]));
+        super(new ArrayList<>(Collections.nCopies(length, (U) null)));
     }
 
     @Override
     public void initialize() {
         int length = length();
         for (int index = 0; index < length; index++) {
-           setBaseAt(index, new BooleanBase());
+            setBaseAt(index, (U) new BooleanBase());
         }
     }
 
     @Override
-    public BooleanGene copy() {
+    public BooleanGene<T, U> copy() {
         int length = length();
 
-        BooleanGene copy = new BooleanGene(length);
+        BooleanGene<T, U> copy = new BooleanGene<>(length);
 
         for (int index = 0; index < length; index++) {
-            copy.setBaseAt(index, getBaseAt(index).copy());
+            copy.setBaseAt(index, (U) getBaseAt(index).copy());
         }
 
         return copy;
@@ -39,7 +40,7 @@ public class BooleanGene extends AbstractGene<Boolean, BooleanBase> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        for (Base base : getSequence()) {
+        for (U base : getSequence()) {
             sb.append(base);
         }
 
