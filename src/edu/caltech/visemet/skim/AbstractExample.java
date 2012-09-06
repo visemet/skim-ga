@@ -4,7 +4,12 @@ package edu.caltech.visemet.skim;
  *
  * @author Max Hirschhorn #visemet
  */
-public abstract class AbstractExample<T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> implements Example<T, S, U, V> {
+public abstract class AbstractExample<
+        T,
+        S extends Base<T>,
+        U extends Gene<T, S>,
+        V extends Chromosome<T, S, U>
+> implements Example<T, S, U, V> {
 
     private FitnessEvaluator<T, S, U, V> evaluator;
     private SelectionOperator<T, S, U, V> selector;

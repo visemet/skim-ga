@@ -9,7 +9,10 @@ import java.util.Collections;
  *
  * @author Max Hirschhorn #visemet
  */
-public class IntegerGene<T extends Integer, U extends NumberBase<T>> extends AbstractGene<T, U> {
+public class IntegerGene<
+        T extends Integer,
+        U extends NumberBase<T>
+> extends AbstractGene<T, U> {
 
     public IntegerGene(int length) {
         super(new ArrayList<>(Collections.nCopies(length, (U) null)));

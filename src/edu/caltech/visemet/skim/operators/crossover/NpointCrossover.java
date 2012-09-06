@@ -11,7 +11,11 @@ import java.util.Random;
  *
  * @author Max Hirschhorn #visemet
  */
-public class NpointCrossover<T, S extends Base<T>, U extends Gene<T, S>> implements CrossoverOperator<T, S, U> {
+public class NpointCrossover<
+        T,
+        S extends Base<T>,
+        U extends Gene<T, S>
+> implements CrossoverOperator<T, S, U> {
 
     private Random random = new Random();
 
@@ -34,7 +38,9 @@ public class NpointCrossover<T, S extends Base<T>, U extends Gene<T, S>> impleme
                 int geneLength = child.length();
 
                 int[] points = new int[n + 2];
-                for (int pointIndex = 1; pointIndex < points.length - 1; pointIndex++) {
+                for (int pointIndex = 1; pointIndex < points.length - 1;
+                        pointIndex++) {
+
                     points[pointIndex] = random.nextInt(geneLength);
                 }
 
@@ -42,14 +48,19 @@ public class NpointCrossover<T, S extends Base<T>, U extends Gene<T, S>> impleme
 
                 Arrays.sort(points);
 
-                for (int pointIndex = 1; pointIndex < points.length; pointIndex++) {
+                for (int pointIndex = 1; pointIndex < points.length;
+                        pointIndex++) {
+
                     int startPoint = points[pointIndex - 1];
                     int endPoint = points[pointIndex];
 
                     if (pointIndex % 2 == 0) {
-                        for (int baseIndex = startPoint; baseIndex < endPoint; baseIndex++) {
+                        for (int baseIndex = startPoint; baseIndex < endPoint;
+                                baseIndex++) {
+
                             S childBase = child.getBaseAt(baseIndex);
-                            S otherParentBase = otherParent.getBaseAt(baseIndex);
+                            S otherParentBase =
+                                    otherParent.getBaseAt(baseIndex);
 
                             childBase.setValue(otherParentBase.getValue());
                         }

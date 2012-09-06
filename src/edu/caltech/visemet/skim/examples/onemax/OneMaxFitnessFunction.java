@@ -9,7 +9,12 @@ import edu.caltech.visemet.skim.Gene;
  *
  * @author Max Hirschhorn #visemet
  */
-public class OneMaxFitnessFunction<T extends Boolean, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> implements FitnessEvaluator<T, S, U, V> {
+public class OneMaxFitnessFunction<
+        T extends Boolean,
+        S extends Base<T>,
+        U extends Gene<T, S>,
+        V extends Chromosome<T, S, U>
+> implements FitnessEvaluator<T, S, U, V> {
 
     @Override
     public double evaluate(V chromosome) {

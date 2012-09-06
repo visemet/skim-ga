@@ -13,7 +13,15 @@ import java.util.Iterator;
  */
 public class PopulationStatistics {
 
-    public static <T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> V getLeastFitChromosome(FitnessEvaluator<T, S, U, V> evaluator, Population<T, S, U, V> population) {
+    public static <
+            T,
+            S extends Base<T>,
+            U extends Gene<T, S>,
+            V extends Chromosome<T, S, U>
+    > V getLeastFitChromosome(
+            FitnessEvaluator<T, S, U, V> evaluator,
+            Population<T, S, U, V> population) {
+
         Iterator<V> iterator = population.iterator();
 
         if (!iterator.hasNext()) {
@@ -36,7 +44,15 @@ public class PopulationStatistics {
         return leastFitChromosome;
     }
 
-    public static <T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> V getMostFitChromosome(FitnessEvaluator<T, S, U, V> evaluator, Population<T, S, U, V> population) {
+    public static <
+            T,
+            S extends Base<T>,
+            U extends Gene<T, S>,
+            V extends Chromosome<T, S, U>
+    > V getMostFitChromosome(
+            FitnessEvaluator<T, S, U, V> evaluator,
+            Population<T, S, U, V> population) {
+
         Iterator<V> iterator = population.iterator();
 
         if (!iterator.hasNext()) {
@@ -59,7 +75,14 @@ public class PopulationStatistics {
         return mostFitChromosome;
     }
 
-    public static <T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> double getAverageFitness(FitnessEvaluator<T, S, U, V> evaluator, Population<T, S, U, V> population) {
+    public static <
+            T, S extends Base<T>,
+            U extends Gene<T, S>,
+            V extends Chromosome<T, S, U>
+    > double getAverageFitness(
+            FitnessEvaluator<T, S, U, V> evaluator,
+            Population<T, S, U, V> population) {
+
         double sum = 0;
 
         Iterator<V> iterator = population.iterator();

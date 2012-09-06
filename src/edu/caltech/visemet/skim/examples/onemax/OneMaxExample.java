@@ -24,7 +24,12 @@ import org.apache.commons.cli.PosixParser;
  *
  * @author Max Hirschhorn #visemet
  */
-public class OneMaxExample<T extends Boolean, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> extends AbstractExample<T, S, U, V> {
+public class OneMaxExample<
+        T extends Boolean,
+        S extends Base<T>,
+        U extends Gene<T, S>,
+        V extends Chromosome<T, S, U>
+> extends AbstractExample<T, S, U, V> {
 
     public OneMaxExample(ExampleConfiguration config) {
         super(config);
@@ -66,7 +71,8 @@ public class OneMaxExample<T extends Boolean, S extends Base<T>, U extends Gene<
         double crossoverProbability = config.getCrossoverProbability();
         double mutationProbability = config.getMutationProbability();
 
-        setAlgorithm(new FixedTerminationGeneticAlgorithm<T, S, U, V>(numGenerations,
+        setAlgorithm(new FixedTerminationGeneticAlgorithm<T, S, U, V>(
+                numGenerations,
                 new GeneticAlgorithmConfiguration.Builder<T, S, U>()
                         .setShouldRetainMostFit(true)
                         .setCrossoverProbability(crossoverProbability)
@@ -83,8 +89,12 @@ public class OneMaxExample<T extends Boolean, S extends Base<T>, U extends Gene<
         FitnessEvaluator<T, S, U, V> evaluator = getEvaluator();
         Population<T, S, U, V> population = getPopulation();
 
-        V mostFit = PopulationStatistics.getMostFitChromosome(evaluator, population);
-        System.out.printf("chromosome: %s\nfitness: %.6f\n", mostFit, evaluator.evaluate(mostFit));
+        V mostFit = PopulationStatistics.getMostFitChromosome(
+                evaluator, population);
+
+        System.out.printf(
+                "chromosome: %s\nfitness: %.6f\n", mostFit,
+                evaluator.evaluate(mostFit));
     }
 
     /**
@@ -157,11 +167,20 @@ public class OneMaxExample<T extends Boolean, S extends Base<T>, U extends Gene<
                 throw new ParseException(null);
             }
 
-            int geneLength = (int) (long) line.getParsedOptionValue(gene.getOpt());
-            int populationSize = (int) (long) line.getParsedOptionValue(population.getOpt());
-            int numGenerations = (int) (long) line.getParsedOptionValue(generations.getOpt());
-            double crossoverProbability = (double) line.getParsedOptionValue(crossover.getOpt());
-            double mutationProbability = (double) line.getParsedOptionValue(mutation.getOpt());
+            int geneLength = (int) (long) line.getParsedOptionValue(
+                    gene.getOpt());
+
+            int populationSize = (int) (long) line.getParsedOptionValue(
+                    population.getOpt());
+
+            int numGenerations = (int) (long) line.getParsedOptionValue(
+                    generations.getOpt());
+
+            double crossoverProbability = (double) line.getParsedOptionValue(
+                    crossover.getOpt());
+
+            double mutationProbability = (double) line.getParsedOptionValue(
+                    mutation.getOpt());
 
             ExampleConfiguration config = new ExampleConfiguration.Builder()
                     .setGeneLength(geneLength)
@@ -171,7 +190,17 @@ public class OneMaxExample<T extends Boolean, S extends Base<T>, U extends Gene<
                     .setMutationProbability(mutationProbability)
                     .build();
 
-            Example<Boolean, BooleanBase, BooleanGene, DefaultChromosome<Boolean, BooleanBase, BooleanGene>> example = new OneMaxExample<>(config);
+            Example<
+                    Boolean,
+                    BooleanBase,
+                    BooleanGene<Boolean, BooleanBase>,
+                    DefaultChromosome<
+                            Boolean,
+                            BooleanBase,
+                            BooleanGene<Boolean, BooleanBase>
+                    >
+            > example = new OneMaxExample<>(config);
+
             example.configure();
             example.execute();
         } catch (ParseException ex) {
@@ -184,13 +213,16 @@ public class OneMaxExample<T extends Boolean, S extends Base<T>, U extends Gene<
             int width = 72;
             String cmdLineSyntax = "sh onemax.sh";
             String header = "options:";
-            String footer = "example: sh onemax.sh -gl 60 -ps 30 -ng 100 -cp 0.8 -mp 0.02";
+            String footer = "example: sh onemax.sh -gl 60 -ps 30 -ng 100 -cp"
+                    + "0.8 -mp 0.02";
             int leftPad = 2;
             int descPad = 4;
             boolean autoUsage = true;
 
             HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp(pw, width, cmdLineSyntax, header, options, leftPad, descPad, footer, autoUsage);
+            formatter.printHelp(
+                    pw, width, cmdLineSyntax, header, options, leftPad, descPad,
+                    footer, autoUsage);
 
             pw.flush();
         }

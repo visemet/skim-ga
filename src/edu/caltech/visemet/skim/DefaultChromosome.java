@@ -7,7 +7,11 @@ import java.util.Random;
  *
  * @author Max Hirschhorn #visemet
  */
-public class DefaultChromosome<T, S extends Base<T>, U extends Gene<T, S>> implements Chromosome<T, S, U> {
+public class DefaultChromosome<
+        T,
+        S extends Base<T>,
+        U extends Gene<T, S>
+> implements Chromosome<T, S, U> {
 
     private List<U> genes;
 

@@ -7,7 +7,11 @@ import edu.caltech.visemet.skim.operators.mutator.RandomMutator;
  *
  * @author Max Hirschhorn #visemet
  */
-public class GeneticAlgorithmConfiguration<T, S extends Base<T>, U extends Gene<T, S>> {
+public class GeneticAlgorithmConfiguration<
+        T,
+        S extends Base<T>,
+        U extends Gene<T, S>
+> {
 
     private Builder<T, S, U> builder;
 
@@ -55,22 +59,30 @@ public class GeneticAlgorithmConfiguration<T, S extends Base<T>, U extends Gene<
             mutator = new RandomMutator<>();
         }
 
-        public Builder<T, S, U> setShouldRetainMostFit(boolean shouldRetainMostFit) {
+        public Builder<T, S, U> setShouldRetainMostFit(
+                boolean shouldRetainMostFit) {
+
             this.shouldRetainMostFit = shouldRetainMostFit;
             return this;
         }
 
-        public Builder<T, S, U> setCrossoverProbability(double crossoverProbability) {
+        public Builder<T, S, U> setCrossoverProbability(
+                double crossoverProbability) {
+
             this.crossoverProbability = crossoverProbability;
             return this;
         }
 
-        public Builder<T, S, U> setMutationProbability(double mutationProbability) {
+        public Builder<T, S, U> setMutationProbability(
+                double mutationProbability) {
+
             this.mutationProbability = mutationProbability;
             return this;
         }
 
-        public Builder<T, S, U> setCrossover(CrossoverOperator<T, S, U> crossover) {
+        public Builder<T, S, U> setCrossover(
+                CrossoverOperator<T, S, U> crossover) {
+
             this.crossover = crossover;
             return this;
         }

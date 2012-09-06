@@ -7,7 +7,12 @@ import java.util.List;
  *
  * @author Max Hirschhorn #visemet
  */
-public interface Population<T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> {
+public interface Population<
+        T,
+        S extends Base<T>,
+        U extends Gene<T, S>,
+        V extends Chromosome<T, S, U>
+> {
 
     void initialize();
 

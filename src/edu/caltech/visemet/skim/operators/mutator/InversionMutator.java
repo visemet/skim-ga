@@ -3,14 +3,17 @@ package edu.caltech.visemet.skim.operators.mutator;
 import edu.caltech.visemet.skim.Base;
 import edu.caltech.visemet.skim.Gene;
 import edu.caltech.visemet.skim.MutationOperator;
-import edu.caltech.visemet.skim.genes.BooleanBase;
 import java.util.Random;
 
 /**
  *
  * @author Max Hirschhorn #visemet
  */
-public class InversionMutator<T extends Boolean, S extends Base<T>, U extends Gene<T, S>> implements MutationOperator<T, S, U> {
+public class InversionMutator<
+        T extends Boolean,
+        S extends Base<T>,
+        U extends Gene<T, S>
+> implements MutationOperator<T, S, U> {
 
     private Random random = new Random();
 
@@ -19,8 +22,10 @@ public class InversionMutator<T extends Boolean, S extends Base<T>, U extends Ge
         int geneLength = gene.length();
         for (int baseIndex = 0; baseIndex < geneLength; baseIndex++) {
             if (random.nextDouble() < probability) {
-                BooleanBase base = (BooleanBase) gene.getBaseAt(baseIndex);
-                base.setValue(!base.getValue());
+                S base = gene.getBaseAt(baseIndex);
+
+                Boolean inverse = !base.getValue();
+                base.setValue((T) inverse);
             }
         }
     }

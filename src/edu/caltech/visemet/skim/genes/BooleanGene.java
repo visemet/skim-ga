@@ -9,7 +9,10 @@ import java.util.Collections;
  *
  * @author Max Hirschhorn #visemet
  */
-public class BooleanGene<T extends Boolean, U extends Base<T>> extends AbstractGene<T, U> {
+public class BooleanGene<
+        T extends Boolean,
+        U extends Base<T>
+> extends AbstractGene<T, U> {
 
     public BooleanGene(int length) {
         super(new ArrayList<>(Collections.nCopies(length, (U) null)));

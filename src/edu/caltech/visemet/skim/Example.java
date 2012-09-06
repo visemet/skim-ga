@@ -4,7 +4,12 @@ package edu.caltech.visemet.skim;
  *
  * @author Max Hirschhorn #visemet
  */
-public interface Example<T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> {
+public interface Example<
+        T,
+        S extends Base<T>,
+        U extends Gene<T, S>,
+        V extends Chromosome<T, S, U>
+> {
 
     void execute();
 

@@ -9,13 +9,11 @@ import java.util.Random;
  *
  * @author Max Hirschhorn #visemet
  */
-public class RandomMutator<T, S extends Base<T>, U extends Gene<T, S>> implements MutationOperator<T, S, U> {
-
-    public static RandomMutator INSTANCE = new RandomMutator();
-
-    public static <T, S extends Base<T>, U extends Gene<T, S>> RandomMutator<T, S, U> getInstance() {
-        return null;
-    }
+public class RandomMutator<
+        T,
+        S extends Base<T>,
+        U extends Gene<T, S>
+> implements MutationOperator<T, S, U> {
 
     private Random random = new Random();
 

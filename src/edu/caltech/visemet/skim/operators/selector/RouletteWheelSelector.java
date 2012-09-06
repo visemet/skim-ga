@@ -19,7 +19,12 @@ import java.util.Random;
  *
  * @author Max Hirschhorn #visemet
  */
-public class RouletteWheelSelector<T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> implements SelectionOperator<T, S, U, V> {
+public class RouletteWheelSelector<
+        T,
+        S extends Base<T>,
+        U extends Gene<T, S>,
+        V extends Chromosome<T, S, U>
+> implements SelectionOperator<T, S, U, V> {
 
     private Random random = new Random();
 
@@ -36,7 +41,10 @@ public class RouletteWheelSelector<T, S extends Base<T>, U extends Gene<T, S>, V
     }
 
     @Override
-    public List<V> select(int count, final FitnessEvaluator<T, S, U, V> evaluator, Population<T, S, U, V> population) {
+    public List<V> select(
+            int count, final FitnessEvaluator<T, S, U, V> evaluator,
+            Population<T, S, U, V> population) {
+
         List<V> chromosomes = population.toList();
 
         final Map<Chromosome, Double> cache = new HashMap<>();
@@ -81,7 +89,9 @@ public class RouletteWheelSelector<T, S extends Base<T>, U extends Gene<T, S>, V
         int selectedIndex = 0;
         int chromosomeIndex = 0;
 
-        List<V> selected = new ArrayList<>(Collections.nCopies(count, (V) null));
+        List<V> selected = new ArrayList<>(
+                Collections.nCopies(count, (V) null));
+
         while (selectedIndex < count) {
             double probability = probabilities[selectedIndex];
             double fitness = fitnesses[chromosomeIndex];

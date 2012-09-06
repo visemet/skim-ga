@@ -10,7 +10,12 @@ import java.util.Random;
  *
  * @author Max Hirschhorn #visemet
  */
-public class DefaultPopulation<T, S extends Base<T>, U extends Gene<T, S>, V extends Chromosome<T, S, U>> implements Population<T, S, U, V> {
+public class DefaultPopulation<
+        T,
+        S extends Base<T>,
+        U extends Gene<T, S>,
+        V extends Chromosome<T, S, U>
+> implements Population<T, S, U, V> {
 
     private Collection<V> chromosomes;
 
