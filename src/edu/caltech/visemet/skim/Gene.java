@@ -21,7 +21,7 @@ public interface Gene<T, S extends Base<T>> {
      * Randomizes the value for bases of this gene.
      *
      * @param random the pseudorandom number generator
-     * 
+     *
      * @see Base#randomize(java.util.Random)
      */
     void randomize(Random random);
@@ -54,7 +54,7 @@ public interface Gene<T, S extends Base<T>> {
      * with the specified base.
      *
      * @param index the index of the base to replace
-     * @param base the base be stored at specified position
+     * @param base the base to be stored at specified position
      */
     void setBaseAt(int index, S base);
 
