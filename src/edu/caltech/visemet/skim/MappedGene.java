@@ -17,6 +17,15 @@ public class MappedGene<K, T, S extends Base<T>> implements Gene<T, S> {
     private Map<K, S> map = new HashMap<>();
 
     public MappedGene(List<K> keys, Gene<T, S> gene) {
+        int numKeys = keys.size();
+        int geneLength = gene.length();
+
+        if (numKeys < geneLength) {
+            throw new IllegalArgumentException("missing key for base");
+        } else if (numKeys > geneLength) {
+            throw new IllegalArgumentException("missing base for key");
+        }
+
         this.keys = keys;
         this.gene = gene;
 
@@ -24,10 +33,14 @@ public class MappedGene<K, T, S extends Base<T>> implements Gene<T, S> {
     }
 
     private void updateMap() {
-        int length = Math.min(keys.size(), gene.length());
+        int length = length();
         for (int index = 0; index < length; index++) {
-            map.put(keys.get(index), gene.getBaseAt(index));
+            updateMap(keys.get(index), gene.getBaseAt(index));
         }
+    }
+
+    private void updateMap(K key, S base) {
+        map.put(key, base);
     }
 
     @Override
@@ -55,7 +68,7 @@ public class MappedGene<K, T, S extends Base<T>> implements Gene<T, S> {
 
     @Override
     public S getBaseAt(int index) {
-        return gene.getBaseAt(index);
+        return getBaseWith(keys.get(index));
     }
 
     public S getBaseWith(K key) {
@@ -64,13 +77,12 @@ public class MappedGene<K, T, S extends Base<T>> implements Gene<T, S> {
 
     @Override
     public void setBaseAt(int index, S base) {
-        gene.setBaseAt(index, base);
-        updateMap();
+        setBaseWith(keys.get(index), base);
     }
 
     public void setBaseWith(K key, S base) {
         map.put(key, base);
-        updateMap();
+        updateMap(key, base);
     }
 
     @Override
