@@ -1,7 +1,8 @@
 package edu.caltech.visemet.skim;
 
-import edu.caltech.visemet.skim.operators.crossover.NpointCrossover;
-import edu.caltech.visemet.skim.operators.mutator.RandomMutator;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -19,44 +20,58 @@ public class GeneticAlgorithmConfiguration<
         this.builder = builder;
     }
 
-    public double getCrossoverProbability() {
-        return builder.crossoverProbability;
-    }
-
-    public double getMutationProbability() {
-        return builder.mutationProbability;
-    }
-
-    public CrossoverOperator<T, S, U> getCrossover() {
-        return builder.crossover;
-    }
-
-    public MutationOperator<T, S, U> getMutator() {
-        return builder.mutator;
-    }
-
     public boolean shouldRetainMostFit() {
         return builder.shouldRetainMostFit;
+    }
+
+    public int getNumCrossoverParents() {
+        return builder.numCrossoverParents;
+    }
+
+    public double getCrossoverProbability(int index) {
+        return builder.crossoverProbabilities[index];
+    }
+
+    public double getMutationProbability(int index) {
+        return builder.mutationProbabilities[index];
+    }
+
+    public CrossoverOperator<T, S, U> getCrossover(int index) {
+        return builder.crossovers.get(index);
+    }
+
+    public MutationOperator<T, S, U> getMutator(int index) {
+        return builder.mutators.get(index);
     }
 
     public static class Builder<T, S extends Base<T>, U extends Gene<T, S>> {
 
         private boolean shouldRetainMostFit;
 
-        private double crossoverProbability;
+        private int numCrossoverParents;
 
-        private double mutationProbability;
+        private double[] crossoverProbabilities;
 
-        private CrossoverOperator<T, S, U> crossover;
+        private double[] mutationProbabilities;
 
-        private MutationOperator<T, S, U> mutator;
+        private List<CrossoverOperator<T, S, U>> crossovers;
 
-        public Builder() {
+        private List<MutationOperator<T, S, U>> mutators;
+
+        public Builder(int length) {
             shouldRetainMostFit = true;
-            crossoverProbability = 1;
-            mutationProbability = 0;
-            crossover = new NpointCrossover<>(1);
-            mutator = new RandomMutator<>();
+
+            numCrossoverParents = 2;
+
+            crossoverProbabilities = new double[length];
+
+            mutationProbabilities = new double[length];
+
+            crossovers = new ArrayList<>(Collections.nCopies(
+                    length, (CrossoverOperator<T, S, U>) null));
+
+            mutators = new ArrayList<>(Collections.nCopies(
+                    length, (MutationOperator<T, S, U>) null));
         }
 
         public Builder<T, S, U> setShouldRetainMostFit(
@@ -66,29 +81,38 @@ public class GeneticAlgorithmConfiguration<
             return this;
         }
 
-        public Builder<T, S, U> setCrossoverProbability(
-                double crossoverProbability) {
+        public Builder<T, S, U> setNumCrossoverParents(
+                int numCrossoverParents) {
 
-            this.crossoverProbability = crossoverProbability;
+            this.numCrossoverParents = numCrossoverParents;
+            return this;
+        }
+
+        public Builder<T, S, U> setCrossoverProbability(
+                int index, double probability) {
+
+            this.crossoverProbabilities[index] = probability;
             return this;
         }
 
         public Builder<T, S, U> setMutationProbability(
-                double mutationProbability) {
+                int index, double probability) {
 
-            this.mutationProbability = mutationProbability;
+            this.mutationProbabilities[index] = probability;
             return this;
         }
 
         public Builder<T, S, U> setCrossover(
-                CrossoverOperator<T, S, U> crossover) {
+                int index, CrossoverOperator<T, S, U> crossover) {
 
-            this.crossover = crossover;
+            this.crossovers.set(index, crossover);
             return this;
         }
 
-        public Builder<T, S, U> setMutator(MutationOperator<T, S, U> mutator) {
-            this.mutator = mutator;
+        public Builder<T, S, U> setMutator(
+                int index, MutationOperator<T, S, U> mutator) {
+
+            this.mutators.set(index, mutator);
             return this;
         }
 

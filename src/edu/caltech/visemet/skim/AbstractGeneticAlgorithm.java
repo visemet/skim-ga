@@ -4,6 +4,7 @@ import edu.caltech.visemet.skim.statistics.PopulationStatistics;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -17,6 +18,8 @@ public abstract class AbstractGeneticAlgorithm<
 > implements GeneticAlgorithm<T, S, U, V> {
 
     private GeneticAlgorithmConfiguration<T, S, U> configuration;
+
+    private Random random = new Random();
 
     public AbstractGeneticAlgorithm(
             GeneticAlgorithmConfiguration<T, S, U> configuration) {
@@ -33,48 +36,70 @@ public abstract class AbstractGeneticAlgorithm<
         Population<T, S, U, V> nextPopulation =
                 new DefaultPopulation<>(new ArrayList<V>());
 
-        double crossoverProbability = configuration.getCrossoverProbability();
-        double mutationProbability = configuration.getMutationProbability();
-
-        CrossoverOperator<T, S, U> crossover = configuration.getCrossover();
-        MutationOperator<T, S, U> mutator = configuration.getMutator();
-
         int count = population.size();
         if (configuration.shouldRetainMostFit()) {
-            nextPopulation.add(PopulationStatistics.getMostFitChromosome(
-                    evaluator, population));
             count--;
         }
 
+        int numParents = configuration.getNumCrossoverParents();
+
         List<V> chromosomes = selector.select(count, evaluator, population);
-        for (int chromosomeIndex = 0; chromosomeIndex < count;
-                chromosomeIndex++) {
 
-            V parent = chromosomes.get(chromosomeIndex);
-
-            int otherChromosomeIndex = (chromosomeIndex + 1) % count;
-            V otherParent = chromosomes.get(otherChromosomeIndex);
-
-            int chromosomeLength = Math.min(
-                    parent.length(), otherParent.length());
-
-            V child = (V) new DefaultChromosome<>(new ArrayList<>(
-                    Collections.nCopies(chromosomeLength, (U) null)));
-
-            for (int geneIndex = 0; geneIndex < chromosomeLength; geneIndex++) {
-                U parentGene = (U) parent.getGeneAt(geneIndex);
-                U otherParentGene = (U) otherParent.getGeneAt(geneIndex);
-
-                U childGene = crossover.crossover(
-                        crossoverProbability, parentGene,
-                        Collections.singletonList(otherParentGene));
-
-                mutator.mutate(mutationProbability, childGene);
-
-                child.setGeneAt(geneIndex, childGene);
+        int remaining;
+        while ((remaining = count - nextPopulation.size()) > 0) {
+            List<V> parents = new ArrayList<>(numParents);
+            for (int num = 0; num < numParents; num++) {
+                int parentIndex = random.nextInt(count);
+                parents.add(chromosomes.get(parentIndex));
             }
 
-            nextPopulation.add(child);
+            int chromosomeLength = parents.get(0).length();
+
+            List<V> children = new ArrayList<>(numParents);
+            for (int num = 0; num < numParents; num++) {
+                V child = (V) new DefaultChromosome<>(new ArrayList<>(
+                        Collections.nCopies(chromosomeLength, (U) null)));
+
+                children.add(child);
+            }
+
+            for (int geneIndex = 0; geneIndex < chromosomeLength; geneIndex++) {
+                List<U> parentGenes = new ArrayList<>();
+                for (V parent : parents) {
+                    parentGenes.add(parent.getGeneAt(geneIndex));
+                }
+
+                double crossoverProbability =
+                        configuration.getCrossoverProbability(geneIndex);
+
+                double mutationProbability =
+                        configuration.getMutationProbability(geneIndex);
+
+                CrossoverOperator<T, S, U> crossover =
+                        configuration.getCrossover(geneIndex);
+
+                MutationOperator<T, S, U> mutator =
+                        configuration.getMutator(geneIndex);
+
+                List<U> childrenGene = crossover.crossover(
+                        crossoverProbability, parentGenes);
+
+                for (int index = 0; index < numParents; index++) {
+                    U childGene = childrenGene.get(index);
+                    mutator.mutate(mutationProbability, childGene);
+                    children.get(index).setGeneAt(geneIndex, childGene);
+                }
+            }
+
+            int maxIndex = Math.min(remaining, numParents);
+            for (int index = 0; index < maxIndex; index++) {
+                nextPopulation.add(children.get(index));
+            }
+        }
+
+        if (configuration.shouldRetainMostFit()) {
+            nextPopulation.add(PopulationStatistics.getMostFitChromosome(
+                    evaluator, population));
         }
 
         return nextPopulation;
