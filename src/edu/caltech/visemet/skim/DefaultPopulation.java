@@ -19,14 +19,14 @@ public class DefaultPopulation<
 
     private Collection<V> chromosomes;
 
+    private Random random = new Random();
+
     public DefaultPopulation(Collection<V> chromosomes) {
         this.chromosomes = chromosomes;
     }
 
     @Override
     public void initialize() {
-        Random random = new Random();
-
         for (V chromosome : chromosomes) {
             chromosome.initialize();
             chromosome.randomize(random);
