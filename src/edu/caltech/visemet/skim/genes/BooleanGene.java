@@ -11,29 +11,29 @@ import java.util.Collections;
  */
 public class BooleanGene<
         T extends Boolean,
-        U extends Base<T>
-> extends AbstractGene<T, U> {
+        S extends Base<T>
+> extends AbstractGene<T, S> {
 
     public BooleanGene(int length) {
-        super(new ArrayList<>(Collections.nCopies(length, (U) null)));
+        super(new ArrayList<>(Collections.nCopies(length, (S) null)));
     }
 
     @Override
     public void initialize() {
         int length = length();
         for (int index = 0; index < length; index++) {
-            setBaseAt(index, (U) new BooleanBase());
+            setBaseAt(index, (S) new BooleanBase());
         }
     }
 
     @Override
-    public BooleanGene<T, U> copy() {
+    public BooleanGene<T, S> copy() {
         int length = length();
 
-        BooleanGene<T, U> copy = new BooleanGene<>(length);
+        BooleanGene<T, S> copy = new BooleanGene<>(length);
 
         for (int index = 0; index < length; index++) {
-            copy.setBaseAt(index, (U) getBaseAt(index).copy());
+            copy.setBaseAt(index, (S) getBaseAt(index).copy());
         }
 
         return copy;
@@ -43,7 +43,7 @@ public class BooleanGene<
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        for (U base : getSequence()) {
+        for (S base : getSequence()) {
             sb.append(base);
         }
 

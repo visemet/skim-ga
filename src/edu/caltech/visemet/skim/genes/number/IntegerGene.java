@@ -11,29 +11,29 @@ import java.util.Collections;
  */
 public class IntegerGene<
         T extends Integer,
-        U extends NumberBase<T>
-> extends AbstractGene<T, U> {
+        S extends NumberBase<T>
+> extends AbstractGene<T, S> {
 
     public IntegerGene(int length) {
-        super(new ArrayList<>(Collections.nCopies(length, (U) null)));
+        super(new ArrayList<>(Collections.nCopies(length, (S) null)));
     }
 
     @Override
     public void initialize() {
         int length = length();
         for (int index = 0; index < length; index++) {
-            setBaseAt(index, (U) new IntegerBase());
+            setBaseAt(index, (S) new IntegerBase());
         }
     }
 
     @Override
-    public IntegerGene<T, U> copy() {
+    public IntegerGene<T, S> copy() {
         int length = length();
 
-        IntegerGene<T, U> copy = new IntegerGene<>(length);
+        IntegerGene<T, S> copy = new IntegerGene<>(length);
 
         for (int index = 0; index < length; index++) {
-            copy.setBaseAt(index, (U) getBaseAt(index).copy());
+            copy.setBaseAt(index, (S) getBaseAt(index).copy());
         }
 
         return copy;
