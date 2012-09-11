@@ -66,10 +66,11 @@ public interface Gene<T, S extends Base<T>> {
     int length();
 
     /**
-     * Returns an identical gene with the same sequence as this. The sequence is
-     * composed of identical bases with the same value.
+     * Returns another gene with its sequence identical to this gene. The
+     * sequence is composed of bases with their values identical to the values
+     * in the sequence of this gene.
      *
-     * @return an identical gene with the same sequence as this
+     * @return another gene with its sequence identical to this gene
      *
      * @see Base#copy()
      */

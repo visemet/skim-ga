@@ -32,9 +32,9 @@ public interface Base<T> {
     void setValue(T value);
 
     /**
-     * Returns an identical base with the same value as this.
+     * Returns another base with its value identical to this base.
      *
-     * @return an identical base with the same value as this.
+     * @return another base with its value identical to this base
      */
     Base<T> copy();
 }
