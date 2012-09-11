@@ -6,7 +6,15 @@ package edu.caltech.visemet.skim;
  */
 public class ExampleConfiguration {
 
-    private Builder builder;
+    private int geneLength;
+
+    private int populationSize;
+
+    private int numGenerations;
+
+    private double crossoverProbability;
+
+    private double mutationProbability;
 
     /**
      * Class constructor specifying the configuration builder.
@@ -14,7 +22,11 @@ public class ExampleConfiguration {
      * @param builder the configuration builder used by this configuration
      */
     public ExampleConfiguration(Builder builder) {
-        this.builder = builder;
+        this.geneLength = builder.geneLength;
+        this.populationSize = builder.populationSize;
+        this.numGenerations = builder.numGenerations;
+        this.crossoverProbability = builder.crossoverProbability;
+        this.mutationProbability = builder.mutationProbability;
     }
 
     /**
@@ -23,7 +35,7 @@ public class ExampleConfiguration {
      * @return the gene length of this configuration
      */
     public int getGeneLength() {
-        return builder.geneLength;
+        return geneLength;
     }
 
     /**
@@ -32,7 +44,7 @@ public class ExampleConfiguration {
      * @return the population size of this configuration
      */
     public int getPopulationSize() {
-        return builder.populationSize;
+        return populationSize;
     }
 
     /**
@@ -41,7 +53,7 @@ public class ExampleConfiguration {
      * @return the number of generations of this configuration
      */
     public int getNumGenerations() {
-        return builder.numGenerations;
+        return numGenerations;
     }
 
     /**
@@ -50,7 +62,7 @@ public class ExampleConfiguration {
      * @return the crossover probability of this configuration
      */
     public double getCrossoverProbability() {
-        return builder.crossoverProbability;
+        return crossoverProbability;
     }
 
     /**
@@ -59,7 +71,7 @@ public class ExampleConfiguration {
      * @return the mutation probability of this configuration
      */
     public double getMutationProbability() {
-        return builder.mutationProbability;
+        return mutationProbability;
     }
 
     /**
@@ -68,9 +80,13 @@ public class ExampleConfiguration {
     public static class Builder {
 
         private int geneLength;
+
         private int populationSize;
+
         private int numGenerations;
+
         private double crossoverProbability;
+
         private double mutationProbability;
 
         /**
