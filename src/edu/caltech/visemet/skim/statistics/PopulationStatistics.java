@@ -13,6 +13,28 @@ import java.util.Iterator;
  */
 public class PopulationStatistics {
 
+    /**
+     * Class constructor. Suppressed to ensure non-instantiability.
+     */
+    private PopulationStatistics() { }
+
+    /**
+     * Returns the least fit chromosome of the specified population using the
+     * specified fitness evaluator.
+     *
+     * @param <T> the type of value for bases of genes of chromosomes of this
+     * population statistics
+     * @param <S> the type of base for genes of chromosomes of this population
+     * statistics
+     * @param <U> the type of gene for chromosomes of this population statistics
+     * @param <V> the type of chromosome for this population statistics
+     *
+     * @param evaluator the fitness evaluator used by this population statistics
+     * @param population the population from which the chromosomes are chosen
+     *
+     * @return the least fit chromosome of the specified population using the
+     * specified fitness evaluator
+     */
     public static <
             T,
             S extends Base<T>,
@@ -44,6 +66,23 @@ public class PopulationStatistics {
         return leastFitChromosome;
     }
 
+    /**
+     * Returns the most fit chromosome of the specified population using the
+     * specified fitness evaluator.
+     *
+     * @param <T> the type of value for bases of genes of chromosomes of this
+     * population statistics
+     * @param <S> the type of base for genes of chromosomes of this population
+     * statistics
+     * @param <U> the type of gene for chromosomes of this population statistics
+     * @param <V> the type of chromosome for this population statistics
+     *
+     * @param evaluator the fitness evaluator used by this population statistics
+     * @param population the population from which the chromosomes are chosen
+     *
+     * @return the most fit chromosome of the specified population using the
+     * specified fitness evaluator
+     */
     public static <
             T,
             S extends Base<T>,
@@ -75,8 +114,26 @@ public class PopulationStatistics {
         return mostFitChromosome;
     }
 
+    /**
+     * Returns the average fitness of the specified population using the
+     * specified fitness evaluator.
+     *
+     * @param <T> the type of value for bases of genes of chromosomes of this
+     * population statistics
+     * @param <S> the type of base for genes of chromosomes of this population
+     * statistics
+     * @param <U> the type of gene for chromosomes of this population statistics
+     * @param <V> the type of chromosome for this population statistics
+     *
+     * @param evaluator the fitness evaluator used by this population statistics
+     * @param population the population from which the chromosomes are chosen
+     *
+     * @return the average fitness of the specified population using the
+     * specified fitness evaluator
+     */
     public static <
-            T, S extends Base<T>,
+            T,
+            S extends Base<T>,
             U extends Gene<T, S>,
             V extends Chromosome<T, S, U>
     > double getAverageFitness(
