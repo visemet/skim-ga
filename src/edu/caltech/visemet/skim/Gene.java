@@ -54,7 +54,7 @@ public interface Gene<T, S extends Base<T>> {
      * with the specified base.
      *
      * @param index the index of the base to replace
-     * @param base the base to be stored at specified position
+     * @param base the base to be stored at the specified position
      */
     void setBaseAt(int index, S base);
 
