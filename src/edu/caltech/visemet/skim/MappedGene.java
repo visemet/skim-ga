@@ -7,6 +7,10 @@ import java.util.Random;
 
 /**
  *
+ * @param <K> the type of key for this gene
+ * @param <T> the type of value for bases of this gene
+ * @param <S> the type of base for this gene
+ *
  * @author Max Hirschhorn #visemet
  */
 public class MappedGene<K, T, S extends Base<T>> implements Gene<T, S> {
@@ -16,6 +20,12 @@ public class MappedGene<K, T, S extends Base<T>> implements Gene<T, S> {
 
     private Map<K, S> map = new HashMap<>();
 
+    /**
+     * Class constructor specifying the list of keys and the gene.
+     *
+     * @param keys the keys of this mapped gene
+     * @param gene the gene wrapped by this mapped gene
+     */
     public MappedGene(List<K> keys, Gene<T, S> gene) {
         int numKeys = keys.size();
         int geneLength = gene.length();
@@ -71,6 +81,15 @@ public class MappedGene<K, T, S extends Base<T>> implements Gene<T, S> {
         return getBaseWith(keys.get(index));
     }
 
+    /**
+     * Returns the base with the specified identifier in the sequence of this
+     * gene.
+     *
+     * @param key the key of the base to return
+     *
+     * @return the base with the specified identifier in the sequence of this
+     * gene
+     */
     public S getBaseWith(K key) {
         return map.get(key);
     }
@@ -80,6 +99,13 @@ public class MappedGene<K, T, S extends Base<T>> implements Gene<T, S> {
         setBaseWith(keys.get(index), base);
     }
 
+    /**
+     * Replaces the base with the specified identifier in the sequence of this
+     * gene with the specified base.
+     *
+     * @param key the identifier of the base to replace
+     * @param base the base to be stored with the specified identifier
+     */
     public void setBaseWith(K key, S base) {
         map.put(key, base);
         updateMap(key, base);
