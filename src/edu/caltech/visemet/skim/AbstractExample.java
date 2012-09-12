@@ -2,6 +2,12 @@ package edu.caltech.visemet.skim;
 
 /**
  *
+ * @param <T> the type of value for bases of genes of chromosomes of this
+ * example
+ * @param <S> the type of base for genes of chromosomes of this example
+ * @param <U> the type of gene for chromosomes of this example
+ * @param <V> the type of chromosome for this example
+ *
  * @author Max Hirschhorn #visemet
  */
 public abstract class AbstractExample<
@@ -17,16 +23,36 @@ public abstract class AbstractExample<
     private GeneticAlgorithm<T, S, U, V> algorithm;
     private ExampleConfiguration config;
 
+    /**
+     * Class constructor specifying the example configuration.
+     *
+     * @param config the configuration used by this example
+     */
     public AbstractExample(ExampleConfiguration config) {
         this.config = config;
     }
 
+    /**
+     * Creates a fitness evaluator for this example using the given
+     * configuration.
+     */
     protected abstract void createEvaluator();
 
+    /**
+     * Creates a selection operator for this example using the given
+     * configuration.
+     */
     protected abstract void createSelector();
 
+    /**
+     * Creates a population for this example using the given configuration.
+     */
     protected abstract void createPopulation();
 
+    /**
+     * Creates a genetic algorithm for this example using the given
+     * configuration.
+     */
     protected abstract void createAlgorithm();
 
     @Override

@@ -8,6 +8,13 @@ import java.util.Random;
 
 /**
  *
+ * @param <T> the type of value for bases of genes of chromosomes of this
+ * genetic algorithm
+ * @param <S> the type of base for genes of chromosomes of this genetic
+ * algorithm
+ * @param <U> the type of gene for chromosomes of this genetic algorithm
+ * @param <V> the type of chromosome for this genetic algorithm
+ *
  * @author Max Hirschhorn #visemet
  */
 public abstract class AbstractGeneticAlgorithm<
@@ -17,14 +24,19 @@ public abstract class AbstractGeneticAlgorithm<
         V extends Chromosome<T, S, U>
 > implements GeneticAlgorithm<T, S, U, V> {
 
-    private GeneticAlgorithmConfiguration<T, S, U> configuration;
+    private GeneticAlgorithmConfiguration<T, S, U> config;
 
     private Random random = new Random();
 
+    /**
+     * Class constructor specifying the configuration.
+     *
+     * @param config the configuration used by this genetic algorithm
+     */
     public AbstractGeneticAlgorithm(
-            GeneticAlgorithmConfiguration<T, S, U> configuration) {
+            GeneticAlgorithmConfiguration<T, S, U> config) {
 
-        this.configuration = configuration;
+        this.config = config;
     }
 
     @Override
@@ -37,11 +49,11 @@ public abstract class AbstractGeneticAlgorithm<
                 new DefaultPopulation<>(new ArrayList<V>());
 
         int count = population.size();
-        if (configuration.shouldRetainMostFit()) {
+        if (config.shouldRetainMostFit()) {
             count--;
         }
 
-        int numParents = configuration.getNumCrossoverParents();
+        int numParents = config.getNumCrossoverParents();
 
         List<V> chromosomes = selector.select(count, evaluator, population);
 
@@ -70,16 +82,16 @@ public abstract class AbstractGeneticAlgorithm<
                 }
 
                 double crossoverProbability =
-                        configuration.getCrossoverProbability(geneIndex);
+                        config.getCrossoverProbability(geneIndex);
 
                 double mutationProbability =
-                        configuration.getMutationProbability(geneIndex);
+                        config.getMutationProbability(geneIndex);
 
                 CrossoverOperator<T, S, U> crossover =
-                        configuration.getCrossover(geneIndex);
+                        config.getCrossover(geneIndex);
 
                 MutationOperator<T, S, U> mutator =
-                        configuration.getMutator(geneIndex);
+                        config.getMutator(geneIndex);
 
                 List<U> childrenGene = crossover.crossover(
                         crossoverProbability, parentGenes);
@@ -97,7 +109,7 @@ public abstract class AbstractGeneticAlgorithm<
             }
         }
 
-        if (configuration.shouldRetainMostFit()) {
+        if (config.shouldRetainMostFit()) {
             nextPopulation.add(PopulationStatistics.getMostFitChromosome(
                     evaluator, population));
         }

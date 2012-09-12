@@ -5,12 +5,20 @@ import java.util.Random;
 
 /**
  *
+ * @param <T> the type of value for bases of this gene
+ * @param <S> the type of base for this gene
+ *
  * @author Max Hirschhorn #visemet
  */
 public abstract class AbstractGene<T, S extends Base<T>> implements Gene<T, S> {
 
     private List<S> sequence;
 
+    /**
+     * Class constructor specifying the sequence.
+     *
+     * @param sequence the sequence of this gene
+     */
     public AbstractGene(List<S> sequence) {
         this.sequence = sequence;
     }

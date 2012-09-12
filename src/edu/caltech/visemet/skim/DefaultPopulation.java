@@ -8,6 +8,12 @@ import java.util.Random;
 
 /**
  *
+ * @param <T> the type of value for bases of genes of chromosomes of this
+ * population
+ * @param <S> the type of base for genes of chromosomes of this population
+ * @param <U> the type of gene for chromosomes of this population
+ * @param <V> the type of chromosome for this population
+ *
  * @author Max Hirschhorn #visemet
  */
 public class DefaultPopulation<
@@ -21,6 +27,11 @@ public class DefaultPopulation<
 
     private Random random = new Random();
 
+    /**
+     * Class constructor specifying the chromosomes.
+     *
+     * @param chromosomes the chromosomes in this population
+     */
     public DefaultPopulation(Collection<V> chromosomes) {
         this.chromosomes = chromosomes;
     }

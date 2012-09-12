@@ -5,6 +5,10 @@ import java.util.Random;
 
 /**
  *
+ * @param <T> the type of value for bases of genes of this chromosome
+ * @param <S> the type of base for genes of this chromosome
+ * @param <U> the type of gene for this chromosome
+ *
  * @author Max Hirschhorn #visemet
  */
 public class DefaultChromosome<
@@ -15,6 +19,11 @@ public class DefaultChromosome<
 
     private List<U> genes;
 
+    /**
+     * Class constructor specifying the genes.
+     *
+     * @param genes the genes of this chromosome
+     */
     public DefaultChromosome(List<U> genes) {
         this.genes = genes;
     }
