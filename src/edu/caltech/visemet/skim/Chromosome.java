@@ -42,7 +42,7 @@ public interface Chromosome<T, S extends Base<T>, U extends Gene<T, S>> {
      * specified gene.
      *
      * @param index the index of the gene to replace
-     * @param base the gene to be stored at specified position
+     * @param gene the gene to be stored at specified position
      */
     void setGeneAt(int index, U gene);
 
