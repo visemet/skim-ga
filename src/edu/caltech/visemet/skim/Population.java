@@ -34,7 +34,8 @@ public interface Population<
      *
      * @param chromosome the chromosome to be stored
      *
-     * @return @code{true} if this population has changed
+     * @return {@code true} if this population has changed, and {@code false}
+     * otherwise
      *
      * @see Collection#add(java.lang.Object)
      */
