@@ -7,6 +7,9 @@ import java.util.Collections;
 
 /**
  *
+ * @param <T> the type of value for bases of this gene
+ * @param <S> the type of base for this gene
+ *
  * @author Max Hirschhorn #visemet
  */
 public class IntegerGene<
@@ -14,6 +17,11 @@ public class IntegerGene<
         S extends NumberBase<T>
 > extends AbstractGene<T, S> {
 
+    /**
+     * Class constructor specifying the length.
+     *
+     * @param length the length of this gene
+     */
     public IntegerGene(int length) {
         super(new ArrayList<>(Collections.nCopies(length, (S) null)));
     }
@@ -22,7 +30,7 @@ public class IntegerGene<
     public void initialize() {
         int length = length();
         for (int index = 0; index < length; index++) {
-            setBaseAt(index, (S) new IntegerBase());
+            setBaseAt(index, (S) new IntegerBase(0));
         }
     }
 

@@ -9,6 +9,9 @@ import java.util.Random;
  */
 public class IntegerBase implements NumberBase<Integer> {
 
+    /**
+     * Defines precision of integer value for the base.
+     */
     public static int PRECISION = 1;
 
     private int minValue;
@@ -16,13 +19,28 @@ public class IntegerBase implements NumberBase<Integer> {
 
     private int value;
 
-    public IntegerBase() {
-        this(Integer.MIN_VALUE, Integer.MAX_VALUE);
+    /**
+     * Class constructor specifying the value. Uses {@code Integer.MIN_VALUE}
+     * and {@code Integer.MAX_VALUE} for the minimum and maximum values
+     * respectively.
+     *
+     * @param value the value of this base
+     */
+    public IntegerBase(int value) {
+        this(Integer.MIN_VALUE, Integer.MAX_VALUE, value);
     }
 
-    public IntegerBase(int minValue, int maxValue) {
+    /**
+     * Class constructor specifying the minimum value, maximum value, and value.
+     *
+     * @param minValue the minimum value of this base
+     * @param maxValue the maximum value of this base
+     * @param value the value of this base
+     */
+    public IntegerBase(int minValue, int maxValue, int value) {
         this.minValue = minValue;
         this.maxValue = maxValue;
+        this.value = value;
     }
 
     @Override
@@ -47,7 +65,8 @@ public class IntegerBase implements NumberBase<Integer> {
 
     @Override
     public void randomize(Random random) {
-        setValue(minValue + (int) (random.nextDouble() * (maxValue - minValue + PRECISION)));
+        setValue(minValue + (int) (random.nextDouble()
+                * (maxValue - minValue + PRECISION)));
     }
 
     @Override
@@ -62,13 +81,7 @@ public class IntegerBase implements NumberBase<Integer> {
 
     @Override
     public IntegerBase copy() {
-        IntegerBase copy = new IntegerBase();
-
-        copy.setValue(value);
-        copy.setMinValue(minValue);
-        copy.setMaxValue(maxValue);
-
-        return copy;
+        return new IntegerBase(minValue, maxValue, value);
     }
 
     @Override

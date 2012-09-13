@@ -11,6 +11,15 @@ public class BooleanBase implements Base<Boolean> {
 
     private boolean value;
 
+    /**
+     * Class constructor specifying the value.
+     *
+     * @param value the value of this base
+     */
+    public BooleanBase(boolean value) {
+        this.value = value;
+    }
+
     @Override
     public void randomize(Random random) {
         setValue(random.nextBoolean());
@@ -28,11 +37,7 @@ public class BooleanBase implements Base<Boolean> {
 
     @Override
     public BooleanBase copy() {
-        BooleanBase copy = new BooleanBase();
-
-        copy.setValue(value);
-
-        return copy;
+        return new BooleanBase(value);
     }
 
     @Override
