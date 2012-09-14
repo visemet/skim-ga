@@ -7,6 +7,10 @@ import java.util.Random;
 
 /**
  *
+ * @param <T> the type of value for bases of genes of this mutation operator
+ * @param <S> the type of base for genes of this mutation operator
+ * @param <U> the type of gene for this mutation operator
+ *
  * @author Max Hirschhorn #visemet
  */
 public class InversionMutator<
@@ -15,7 +19,15 @@ public class InversionMutator<
         U extends Gene<T, S>
 > implements MutationOperator<T, S, U> {
 
+    /**
+     * Holds the random number generator used by this mutation operator.
+     */
     private Random random = new Random();
+
+    /**
+     * Class constructor.
+     */
+    public InversionMutator() { }
 
     @Override
     public void mutate(double probability, U gene) {
