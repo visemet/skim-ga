@@ -15,24 +15,23 @@ public class ShortBase implements NumberBase<Short> {
     private static short PRECISION = 1;
 
     /**
-     * Stores the minimum value of this base.
+     * Holds the minimum value of this base.
      */
     private short minValue;
 
     /**
-     * Stores the maximum value of this base.
+     * Holds the maximum value of this base.
      */
     private short maxValue;
 
     /**
-     * Stores the value of this base.
+     * Holds the value of this base.
      */
     private short value;
 
     /**
-     * Class constructor specifying the value. Uses {@code Short.MIN_VALUE}
-     * and {@code Short.MAX_VALUE} for the minimum and maximum values
-     * respectively.
+     * Class constructor specifying the value. Uses {@code Short.MIN_VALUE} and
+     * {@code Short.MAX_VALUE} for the minimum and maximum values respectively.
      *
      * @param value the value of this base
      */

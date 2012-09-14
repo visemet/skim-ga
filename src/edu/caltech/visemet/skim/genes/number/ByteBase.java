@@ -15,24 +15,23 @@ public class ByteBase implements NumberBase<Byte> {
     private static byte PRECISION = 1;
 
     /**
-     * Stores the minimum value of this base.
+     * Holds the minimum value of this base.
      */
     private byte minValue;
 
     /**
-     * Stores the maximum value of this base.
+     * Holds the maximum value of this base.
      */
     private byte maxValue;
 
     /**
-     * Stores the value of this base.
+     * Holds the value of this base.
      */
     private byte value;
 
     /**
-     * Class constructor specifying the value. Uses {@code Byte.MIN_VALUE}
-     * and {@code Byte.MAX_VALUE} for the minimum and maximum values
-     * respectively.
+     * Class constructor specifying the value. Uses {@code Byte.MIN_VALUE} and
+     * {@code Byte.MAX_VALUE} for the minimum and maximum values respectively.
      *
      * @param value the value of this base
      */

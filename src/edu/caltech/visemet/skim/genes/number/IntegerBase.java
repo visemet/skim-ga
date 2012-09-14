@@ -15,17 +15,17 @@ public class IntegerBase implements NumberBase<Integer> {
     private static int PRECISION = 1;
 
     /**
-     * Stores the minimum value of this base.
+     * Holds the minimum value of this base.
      */
     private int minValue;
 
     /**
-     * Stores the maximum value of this base.
+     * Holds the maximum value of this base.
      */
     private int maxValue;
 
     /**
-     * Stores the value of this base.
+     * Holds the value of this base.
      */
     private int value;
 
