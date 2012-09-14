@@ -10,13 +10,23 @@ import java.util.Random;
 public class IntegerBase implements NumberBase<Integer> {
 
     /**
-     * Defines precision of integer value for the base.
+     * Defines the precision of an integer value for the bases.
      */
-    public static int PRECISION = 1;
+    private static int PRECISION = 1;
 
+    /**
+     * Stores the minimum value of this base.
+     */
     private int minValue;
+
+    /**
+     * Stores the maximum value of this base.
+     */
     private int maxValue;
 
+    /**
+     * Stores the value of this base.
+     */
     private int value;
 
     /**
