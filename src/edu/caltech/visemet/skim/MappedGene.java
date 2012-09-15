@@ -3,27 +3,38 @@ package edu.caltech.visemet.skim;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
 /**
  *
- * @param <K> the type of key for this gene
- * @param <T> the type of value for bases of this gene
- * @param <S> the type of base for this gene
+ * @param <K> the type of key for this mapped gene
+ * @param <T> the type of value for bases of this mapped gene
+ * @param <S> the type of base for this mapped gene
  *
  * @author Max Hirschhorn #visemet
  */
 public class MappedGene<K, T, S extends Base<T>> implements Gene<T, S> {
 
+    /**
+     * Holds the list of keys of this mapped gene.
+     */
     private List<K> keys;
+
+    /**
+     * Holds the gene wrapped by this gene.
+     */
     private Gene<T, S> gene;
 
+    /**
+     * Holds the map of keys to bases of the gene of this mapped gene.
+     */
     private Map<K, S> map = new HashMap<>();
 
     /**
      * Class constructor specifying the list of keys and the gene.
      *
-     * @param keys the keys of this mapped gene
+     * @param keys the list of keys of this mapped gene
      * @param gene the gene wrapped by this mapped gene
      */
     public MappedGene(List<K> keys, Gene<T, S> gene) {
@@ -83,7 +94,7 @@ public class MappedGene<K, T, S extends Base<T>> implements Gene<T, S> {
 
     /**
      * Returns the base with the specified identifier in the sequence of this
-     * gene.
+     * mapped gene.
      *
      * @param key the key of the base to return
      *
@@ -101,7 +112,7 @@ public class MappedGene<K, T, S extends Base<T>> implements Gene<T, S> {
 
     /**
      * Replaces the base with the specified identifier in the sequence of this
-     * gene with the specified base.
+     * mapped gene with the specified base.
      *
      * @param key the identifier of the base to replace
      * @param base the base to be stored with the specified identifier
@@ -119,6 +130,27 @@ public class MappedGene<K, T, S extends Base<T>> implements Gene<T, S> {
     @Override
     public MappedGene<K, T, S> copy() {
         return new MappedGene<>(keys, gene.copy());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.keys, this.gene);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final MappedGene<K, T, S> other = (MappedGene<K, T, S>) obj;
+
+        return (Objects.equals(this.keys, other.keys)
+                && Objects.equals(this.gene, other.gene));
     }
 
     @Override
