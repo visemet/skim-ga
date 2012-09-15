@@ -21,14 +21,14 @@ public class FixedTerminationGeneticAlgorithm<
 > extends AbstractGeneticAlgorithm<T, S, U, V> {
 
     /**
-     * Holds the current generation count of this genetic algorithm.
-     */
-    private int generationCount;
-
-    /**
      * Holds the maximum generation count of this genetic algorithm.
      */
     private int maxGenerationCount;
+
+    /**
+     * Holds the current generation count of this genetic algorithm.
+     */
+    private int generationCount = 0;
 
     /**
      * Class constructor specifying the maximum generation count and the
