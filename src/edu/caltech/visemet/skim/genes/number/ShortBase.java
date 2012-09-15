@@ -12,7 +12,7 @@ public class ShortBase implements NumberBase<Short> {
     /**
      * Defines the precision of a short value for the bases.
      */
-    private static short PRECISION = 1;
+    private static final short PRECISION = 1;
 
     /**
      * Holds the minimum value of this base.

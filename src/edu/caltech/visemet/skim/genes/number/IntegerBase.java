@@ -12,7 +12,7 @@ public class IntegerBase implements NumberBase<Integer> {
     /**
      * Defines the precision of an integer value for the bases.
      */
-    private static int PRECISION = 1;
+    private static final int PRECISION = 1;
 
     /**
      * Holds the minimum value of this base.

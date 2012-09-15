@@ -12,7 +12,7 @@ public class FloatBase implements NumberBase<Float> {
     /**
      * Defines the precision of a float value for the bases.
      */
-    private static float PRECISION = 1e-45f;
+    private static final float PRECISION = 1e-45f;
 
     /**
      * Holds the minimum value of this base.

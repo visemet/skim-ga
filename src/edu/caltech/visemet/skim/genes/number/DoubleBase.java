@@ -12,7 +12,7 @@ public class DoubleBase implements NumberBase<Double> {
     /**
      * Defines the precision of a double value for the bases.
      */
-    private static double PRECISION = 1e-323;
+    private static final double PRECISION = 1e-323;
 
     /**
      * Holds the minimum value of this base.

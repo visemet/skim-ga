@@ -12,7 +12,7 @@ public class LongBase implements NumberBase<Long> {
     /**
      * Defines the precision of a long value for the bases.
      */
-    private static long PRECISION = 1L;
+    private static final long PRECISION = 1L;
 
     /**
      * Holds the minimum value of this base.

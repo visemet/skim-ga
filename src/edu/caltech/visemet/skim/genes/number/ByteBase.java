@@ -12,7 +12,7 @@ public class ByteBase implements NumberBase<Byte> {
     /**
      * Defines the precision of a byte value for the bases.
      */
-    private static byte PRECISION = 1;
+    private static final byte PRECISION = 1;
 
     /**
      * Holds the minimum value of this base.
