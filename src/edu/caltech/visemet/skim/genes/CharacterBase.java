@@ -1,6 +1,7 @@
 package edu.caltech.visemet.skim.genes;
 
 import edu.caltech.visemet.skim.Base;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -22,7 +23,7 @@ public class CharacterBase implements Base<Character> {
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 
     /**
-     * Defines character set of digits for the bases.
+     * Defines the character set of digits for the bases.
      */
     public static final char[] DIGITS = "0123456789".toCharArray();
 
@@ -65,6 +66,26 @@ public class CharacterBase implements Base<Character> {
     @Override
     public CharacterBase copy() {
         return new CharacterBase(set, value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.value);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final CharacterBase other = (CharacterBase) obj;
+
+        return Objects.equals(this.value, other.value);
     }
 
     @Override

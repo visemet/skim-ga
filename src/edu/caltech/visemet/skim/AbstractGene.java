@@ -1,6 +1,7 @@
 package edu.caltech.visemet.skim;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -53,6 +54,26 @@ public abstract class AbstractGene<T, S extends Base<T>> implements Gene<T, S> {
     @Override
     public int length() {
         return sequence.size();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.sequence);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final AbstractGene<T, S> other = (AbstractGene<T, S>) obj;
+
+        return Objects.equals(this.sequence, other.sequence);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package edu.caltech.visemet.skim.genes.number;
 
 import edu.caltech.visemet.skim.NumberBase;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -92,6 +93,26 @@ public class IntegerBase implements NumberBase<Integer> {
     @Override
     public IntegerBase copy() {
         return new IntegerBase(minValue, maxValue, value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.value);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final IntegerBase other = (IntegerBase) obj;
+
+        return Objects.equals(this.value, other.value);
     }
 
     @Override

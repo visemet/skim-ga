@@ -1,6 +1,7 @@
 package edu.caltech.visemet.skim.genes;
 
 import edu.caltech.visemet.skim.Base;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -9,6 +10,9 @@ import java.util.Random;
  */
 public class BooleanBase implements Base<Boolean> {
 
+    /**
+     * Holds the value of this base.
+     */
     private boolean value;
 
     /**
@@ -38,6 +42,26 @@ public class BooleanBase implements Base<Boolean> {
     @Override
     public BooleanBase copy() {
         return new BooleanBase(value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.value);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final BooleanBase other = (BooleanBase) obj;
+
+        return Objects.equals(this.value, other.value);
     }
 
     @Override

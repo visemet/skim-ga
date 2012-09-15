@@ -1,6 +1,7 @@
 package edu.caltech.visemet.skim.genes.number;
 
 import edu.caltech.visemet.skim.NumberBase;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -12,7 +13,7 @@ public class ByteBase implements NumberBase<Byte> {
     /**
      * Defines the precision of a byte value for the bases.
      */
-    private static final byte PRECISION = 1;
+    private static final byte PRECISION = (byte) 1;
 
     /**
      * Holds the minimum value of this base.
@@ -91,6 +92,26 @@ public class ByteBase implements NumberBase<Byte> {
     @Override
     public ByteBase copy() {
         return new ByteBase(minValue, maxValue, value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.value);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final ByteBase other = (ByteBase) obj;
+
+        return Objects.equals(this.value, other.value);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package edu.caltech.visemet.skim.genes.number;
 
 import edu.caltech.visemet.skim.NumberBase;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -12,7 +13,7 @@ public class ShortBase implements NumberBase<Short> {
     /**
      * Defines the precision of a short value for the bases.
      */
-    private static final short PRECISION = 1;
+    private static final short PRECISION = (short) 1;
 
     /**
      * Holds the minimum value of this base.
@@ -91,6 +92,26 @@ public class ShortBase implements NumberBase<Short> {
     @Override
     public ShortBase copy() {
         return new ShortBase(minValue, maxValue, value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.value);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final ShortBase other = (ShortBase) obj;
+
+        return Objects.equals(this.value, other.value);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package edu.caltech.visemet.skim;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -55,6 +56,27 @@ public class DefaultChromosome<
     @Override
     public int length() {
         return genes.size();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.genes);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final DefaultChromosome<T, S, U> other =
+                (DefaultChromosome<T, S, U>) obj;
+
+        return Objects.equals(this.genes, other.genes);
     }
 
     @Override
