@@ -17,6 +17,13 @@ import java.util.Random;
 
 /**
  *
+ * @param <T> the type of value for bases of genes of chromosomes of this
+ * selection operator
+ * @param <S> the type of base for genes of chromosomes of this selection
+ * operator
+ * @param <U> the type of gene for chromosomes of this selection operator
+ * @param <V> the type of chromosome for this selection operator
+ *
  * @author Max Hirschhorn #visemet
  */
 public class RouletteWheelSelector<
@@ -26,7 +33,15 @@ public class RouletteWheelSelector<
         V extends Chromosome<T, S, U>
 > implements SelectionOperator<T, S, U, V> {
 
+    /**
+     * Holds the random number generation of this selection operation.
+     */
     private Random random = new Random();
+
+    /**
+     * Class constructor.
+     */
+    public RouletteWheelSelector() { }
 
     private void normalize(double[] fitnesses) {
         double sum = 0;
@@ -45,7 +60,7 @@ public class RouletteWheelSelector<
             int count, final FitnessEvaluator<T, S, U, V> evaluator,
             Population<T, S, U, V> population) {
 
-        List<V> chromosomes = population.toList();
+        List<V> chromosomes = population.asList();
 
         final Map<Chromosome, Double> cache = new HashMap<>();
 

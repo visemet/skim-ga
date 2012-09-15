@@ -60,5 +60,5 @@ public interface Population<
      *
      * @return a list containing all of the chromosomes in this population
      */
-    List<V> toList();
+    List<V> asList();
 }

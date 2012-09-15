@@ -23,8 +23,14 @@ public class DefaultPopulation<
         V extends Chromosome<T, S, U>
 > implements Population<T, S, U, V> {
 
+    /**
+     * Holds the chromosomes of this population.
+     */
     private Collection<V> chromosomes;
 
+    /**
+     * Holds the random number generation of this population.
+     */
     private Random random = new Random();
 
     /**
@@ -60,7 +66,7 @@ public class DefaultPopulation<
     }
 
     @Override
-    public List<V> toList() {
+    public List<V> asList() {
         return new ArrayList<>(chromosomes);
     }
 }
