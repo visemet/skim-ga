@@ -62,6 +62,18 @@ public abstract class AbstractExample<
     @Override
     public void execute() {
         while (!algorithm.shouldTerminate()) {
+            execute(1);
+        }
+    }
+
+    /**
+     * Executes this example for the specified number of generations.
+     *
+     * @param numGenerations the number of generations for which this example is
+     * executed
+     */
+    protected void execute(int numGenerations) {
+        for (int count = 0; count < numGenerations; count++) {
             setPopulation(algorithm.evolve(evaluator, selector, population));
         }
     }
