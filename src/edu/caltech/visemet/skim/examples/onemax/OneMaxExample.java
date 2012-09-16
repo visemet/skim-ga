@@ -22,6 +22,12 @@ import org.apache.commons.cli.PosixParser;
 
 /**
  *
+ * @param <T> the type of value for bases of genes of chromosomes of this
+ * example
+ * @param <S> the type of base for genes of chromosomes of this example
+ * @param <U> the type of gene for chromosomes of this example
+ * @param <V> the type of chromosome for this example
+ *
  * @author Max Hirschhorn #visemet
  */
 public class OneMaxExample<
@@ -31,6 +37,11 @@ public class OneMaxExample<
         V extends Chromosome<T, S, U>
 > extends AbstractExample<T, S, U, V> {
 
+    /**
+     * Class constructor specifying the example configuration.
+     *
+     * @param config the configuration used by this example
+     */
     public OneMaxExample(ExampleConfiguration config) {
         super(config);
     }
@@ -87,17 +98,27 @@ public class OneMaxExample<
 
     @Override
     public void execute() {
-        super.execute();
+        GeneticAlgorithm<T, S, U, V> algorithm = getAlgorithm();
+
+        int numGenerations = 10;
+
+        int count = 0;
+        while (!algorithm.shouldTerminate()) {
+            execute(numGenerations);
+            count += numGenerations;
+        }
 
         FitnessEvaluator<T, S, U, V> evaluator = getEvaluator();
         Population<T, S, U, V> population = getPopulation();
 
-        V mostFit = PopulationStatistics.getMostFitChromosome(
+        V chromosome = PopulationStatistics.getMostFitChromosome(
                 evaluator, population);
 
+        double fitness = evaluator.evaluate(chromosome);
+
         System.out.printf(
-                "chromosome: %s\nfitness: %.6f\n", mostFit,
-                evaluator.evaluate(mostFit));
+                "Found solution %s with fitness %.6f after %d generations.\n",
+                chromosome, fitness, count);
     }
 
     /**
