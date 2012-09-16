@@ -63,9 +63,9 @@ public class ThresholdTerminationGeneticAlgorithm<
             Population<T, S, U, V> population) {
 
         this.evaluator = evaluator;
-        this.population = population;
+        this.population = super.evolve(evaluator, selector, population);
 
-        return super.evolve(evaluator, selector, population);
+        return this.population;
     }
 
     @Override
