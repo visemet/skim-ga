@@ -1,7 +1,7 @@
 package edu.caltech.visemet.skim.examples.onemax;
 
 import edu.caltech.visemet.skim.*;
-import edu.caltech.visemet.skim.algorithms.FixedTerminationGeneticAlgorithm;
+import edu.caltech.visemet.skim.algorithms.ThresholdTerminationGeneticAlgorithm;
 import edu.caltech.visemet.skim.genes.BooleanBase;
 import edu.caltech.visemet.skim.genes.BooleanGene;
 import edu.caltech.visemet.skim.operators.crossover.NpointCrossover;
@@ -61,24 +61,27 @@ public class OneMaxExample<
             genes.add((U) new BooleanGene(geneLength));
             population.add((V) new DefaultChromosome<>(genes));
         }
+
+        population.initialize();
     }
 
     @Override
     protected void createAlgorithm() {
         ExampleConfiguration config = getConfig();
 
-        int numGenerations = config.getNumGenerations();
+        int geneLength = config.getGeneLength();
         double crossoverProbability = config.getCrossoverProbability();
         double mutationProbability = config.getMutationProbability();
 
-        setAlgorithm(new FixedTerminationGeneticAlgorithm<T, S, U, V>(
-                numGenerations,
-                new GeneticAlgorithmConfiguration.Builder<T, S, U>()
+        setAlgorithm(new ThresholdTerminationGeneticAlgorithm<T, S, U, V>(
+                geneLength,
+                new GeneticAlgorithmConfiguration.Builder<T, S, U>(1)
                         .setShouldRetainMostFit(true)
-                        .setCrossoverProbability(crossoverProbability)
-                        .setMutationProbability(mutationProbability)
-                        .setCrossover(new NpointCrossover<T, S, U>(1))
-                        .setMutator(new InversionMutator<T, S, U>())
+                        .setNumCrossoverParents(2)
+                        .setCrossoverProbability(0, crossoverProbability)
+                        .setMutationProbability(0, mutationProbability)
+                        .setCrossover(0, new NpointCrossover<T, S, U>(1))
+                        .setMutator(0, new InversionMutator<T, S, U>())
                         .build()));
     }
 
@@ -107,6 +110,7 @@ public class OneMaxExample<
 
         Option help = new Option("h", "help", false, "print this message");
 
+        @SuppressWarnings({"static", "static-access"})
         Option gene = OptionBuilder
                 .withLongOpt("gene-length")
                 .withDescription("length of gene")
@@ -116,6 +120,7 @@ public class OneMaxExample<
                 .isRequired()
                 .create("gl");
 
+        @SuppressWarnings({"static", "static-access"})
         Option population = OptionBuilder
                 .withLongOpt("population-size")
                 .withDescription("size of population")
@@ -125,15 +130,7 @@ public class OneMaxExample<
                 .isRequired()
                 .create("ps");
 
-        Option generations = OptionBuilder
-                .withLongOpt("num-generations")
-                .withDescription("number of generations")
-                .hasArg()
-                .withArgName("NUM")
-                .withType(Number.class)
-                .isRequired()
-                .create("ng");
-
+        @SuppressWarnings({"static", "static-access"})
         Option crossover = OptionBuilder
                 .withLongOpt("crossover-prob")
                 .withDescription("probability of crossover")
@@ -143,6 +140,7 @@ public class OneMaxExample<
                 .isRequired()
                 .create("cp");
 
+        @SuppressWarnings({"static", "static-access"})
         Option mutation = OptionBuilder
                 .withLongOpt("mutation-prob")
                 .withDescription("probability of mutation")
@@ -155,7 +153,6 @@ public class OneMaxExample<
         options.addOption(help);
         options.addOption(gene);
         options.addOption(population);
-        options.addOption(generations);
         options.addOption(crossover);
         options.addOption(mutation);
 
@@ -173,9 +170,6 @@ public class OneMaxExample<
             int populationSize = (int) (long) line.getParsedOptionValue(
                     population.getOpt());
 
-            int numGenerations = (int) (long) line.getParsedOptionValue(
-                    generations.getOpt());
-
             double crossoverProbability = (double) line.getParsedOptionValue(
                     crossover.getOpt());
 
@@ -185,7 +179,6 @@ public class OneMaxExample<
             ExampleConfiguration config = new ExampleConfiguration.Builder()
                     .setGeneLength(geneLength)
                     .setPopulationSize(populationSize)
-                    .setNumGenerations(numGenerations)
                     .setCrossoverProbability(crossoverProbability)
                     .setMutationProbability(mutationProbability)
                     .build();
@@ -213,8 +206,8 @@ public class OneMaxExample<
             int width = 72;
             String cmdLineSyntax = "sh onemax.sh";
             String header = "options:";
-            String footer = "example: sh onemax.sh -gl 60 -ps 30 -ng 100 -cp"
-                    + "0.8 -mp 0.02";
+            String footer =
+                    "example: sh onemax.sh -gl 60 -ps 30 -cp 0.8 -mp 0.02";
             int leftPad = 2;
             int descPad = 4;
             boolean autoUsage = true;

@@ -18,9 +18,13 @@ public abstract class AbstractExample<
 > implements Example<T, S, U, V> {
 
     private FitnessEvaluator<T, S, U, V> evaluator;
+
     private SelectionOperator<T, S, U, V> selector;
+
     private Population<T, S, U, V> population;
+
     private GeneticAlgorithm<T, S, U, V> algorithm;
+
     private ExampleConfiguration config;
 
     /**
@@ -57,7 +61,6 @@ public abstract class AbstractExample<
 
     @Override
     public void execute() {
-        population.initialize();
         while (!algorithm.shouldTerminate()) {
             setPopulation(algorithm.evolve(evaluator, selector, population));
         }
