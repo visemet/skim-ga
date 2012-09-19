@@ -54,6 +54,7 @@ public abstract class AbstractGeneticAlgorithm<
         }
 
         int numParents = config.getNumCrossoverParents();
+        int numChildren = 0;
 
         List<V> chromosomes = selector.select(count, evaluator, population);
 
@@ -67,13 +68,7 @@ public abstract class AbstractGeneticAlgorithm<
 
             int chromosomeLength = parents.get(0).length();
 
-            List<V> children = new ArrayList<>(numParents);
-            for (int num = 0; num < numParents; num++) {
-                V child = (V) new DefaultChromosome<>(new ArrayList<>(
-                        Collections.nCopies(chromosomeLength, (U) null)));
-
-                children.add(child);
-            }
+            List<V> children = new ArrayList<>();
 
             for (int geneIndex = 0; geneIndex < chromosomeLength; geneIndex++) {
                 List<U> parentGenes = new ArrayList<>();
@@ -93,20 +88,37 @@ public abstract class AbstractGeneticAlgorithm<
                 MutationOperator<T, S, U> mutator =
                         config.getMutator(geneIndex);
 
-                List<U> childrenGene = crossover.crossover(
+                List<U> childrenGenes = crossover.crossover(
                         crossoverProbability, parentGenes);
 
-                for (int index = 0; index < numParents; index++) {
-                    U childGene = childrenGene.get(index);
+                numChildren = childrenGenes.size();
+
+                if (geneIndex == 0) {
+                    for (int num = 0; num < numChildren; num++) {
+                        List<U> genes = new ArrayList<>(Collections.nCopies(
+                                chromosomeLength, (U) null));
+
+                        V child = (V) new DefaultChromosome<>(genes);
+                        children.add(child);
+                    }
+                }
+
+                for (int childIndex = 0; childIndex < numChildren;
+                        childIndex++) {
+
+                    U childGene = childrenGenes.get(childIndex);
+                    children.get(childIndex).setGeneAt(geneIndex, childGene);
+
                     mutator.mutate(mutationProbability, childGene);
-                    children.get(index).setGeneAt(geneIndex, childGene);
                 }
             }
 
-            int maxIndex = Math.min(remaining, numParents);
-            for (int index = 0; index < maxIndex; index++) {
-                nextPopulation.add(children.get(index));
+            int maxChildIndex = Math.min(remaining, numChildren);
+            for (int childIndex = 0; childIndex < maxChildIndex; childIndex++) {
+                nextPopulation.add(children.get(childIndex));
             }
+
+            numChildren = 0;
         }
 
         if (config.shouldRetainMostFit()) {
