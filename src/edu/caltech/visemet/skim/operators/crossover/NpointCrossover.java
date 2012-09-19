@@ -22,8 +22,14 @@ public class NpointCrossover<
         U extends Gene<T, S>
 > implements CrossoverOperator<T, S, U> {
 
+    /**
+     * Holds the number of points of this crossover operator.
+     */
     private final int n;
 
+    /**
+     * Holds the random number generator of this crossover operator.
+     */
     private Random random = new Random();
 
     /**
@@ -36,78 +42,75 @@ public class NpointCrossover<
     }
 
     /**
-     * Creates an array of points of the specified number with values up to and
-     * including the specified length using the specified random number
+     * Creates an array of positions of the specified number with values up to
+     * and including the specified length using the specified random number
      * generator.
      *
-     * @param numPoints the number of points to be generated
-     * @param length the inclusive maximum value for the generated points
+     * @param numPositions the number of positions to be generated
+     * @param length the inclusive maximum value for the generated positions
      * @param random the random number generator
      *
-     * @return an array of points of the specified number with values up to and
-     * including the specified length using the specified random number
+     * @return an array of positions of the specified number with values up to
+     * and including the specified length using the specified random number
      * generator
      */
-    private static int[] generatePoints(
-            int numPoints, int length, Random random) {
+    private static int[] generatePositions(
+            int numPositions, int length, Random random) {
 
-        int[] points = new int[numPoints];
+        int[] positions = new int[numPositions];
 
-        for (int pointIndex = 0; pointIndex < points.length - 1; pointIndex++) {
-            points[pointIndex] = random.nextInt(length + 1);
+        for (int index = 0; index < positions.length - 1; index++) {
+            positions[index] = random.nextInt(length + 1);
         }
 
-        points[points.length - 1] = length;
+        positions[positions.length - 1] = length;
 
-        Arrays.sort(points);
-        return points;
+        Arrays.sort(positions);
+        return positions;
     }
 
     /**
      * Replaces the value of bases of the specified child gene with the value of
      * bases of the specified other parent gene between the specified range.
      *
-     * @param startIndex the included starting point of the range
-     * @param endIndex the excluded ending point of the range
+     * @param startIndex the included starting index of the range
+     * @param endIndex the excluded ending index of the range
      * @param child the gene for which the value of bases are replaced
      * @param otherParent the gene by which the value of bases are replaced
      */
     private void exchange(
             int startIndex, int endIndex, U child, U otherParent) {
 
-        for (int baseIndex = startIndex; baseIndex < endIndex;
-                baseIndex++) {
-
+        for (int baseIndex = startIndex; baseIndex < endIndex; baseIndex++) {
             S childBase = child.getBaseAt(baseIndex);
-            S otherParentBase =
-                    otherParent.getBaseAt(baseIndex);
+            S otherParentBase = otherParent.getBaseAt(baseIndex);
 
             childBase.setValue(otherParentBase.getValue());
         }
     }
 
     /**
-     * Replaces the value of bases of for all the specified children genes with
+     * Replaces the value of bases of all the specified children genes with
      * the value of bases of the corresponding specified other parent genes
-     * between each pair of the specified ranges of points.
+     * between each pair of the specified ranges of positions.
      *
-     * @param points the range of values between which the value of bases are
+     * @param positions the range of values between which the value of bases are
      * replaced
      * @param children the genes for which the value of bases are replaced
      * @param otherParentsList the genes by which the value of bases are
      * replaced
      */
     private void crossover(
-            int[] points, List<U> children, List<List<U>> otherParentsList) {
+            int[] positions, List<U> children, List<List<U>> otherParentsList) {
 
         int otherParentsIndex = 0;
         int numChildren = children.size();
 
-        for (int pointIndex = 0; pointIndex < points.length - 1;
+        for (int pointIndex = 0; pointIndex < positions.length - 1;
                 pointIndex += 2) {
 
-            int startPoint = points[pointIndex];
-            int endPoint = points[pointIndex + 1];
+            int startPoint = positions[pointIndex];
+            int endPoint = positions[pointIndex + 1];
 
             for (int childIndex = 0; childIndex < numChildren; childIndex++) {
                 U child = children.get(childIndex);
@@ -160,8 +163,8 @@ public class NpointCrossover<
         }
 
         if (random.nextDouble() < probability) {
-            int[] points = generatePoints(n + 1, geneLength, random);
-            crossover(points, children, otherParentsList);
+            int[] positions = generatePositions(n + 1, geneLength, random);
+            crossover(positions, children, otherParentsList);
         }
 
         return children;
