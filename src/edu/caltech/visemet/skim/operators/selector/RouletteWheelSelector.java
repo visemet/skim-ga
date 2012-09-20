@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -62,22 +60,12 @@ public class RouletteWheelSelector<
 
         List<V> chromosomes = population.asList();
 
-        final Map<Chromosome, Double> cache = new HashMap<>();
-
         Collections.sort(chromosomes, new Comparator<V>() {
 
             @Override
             public int compare(V c1, V c2) {
-                if (!cache.containsKey(c1)) {
-                    cache.put(c1, evaluator.evaluate(c1));
-                }
-
-                if (!cache.containsKey(c2)) {
-                    cache.put(c2, evaluator.evaluate(c2));
-                }
-
-                double fitness1 = cache.get(c1);
-                double fitness2 = cache.get(c2);
+                double fitness1 = evaluator.evaluate(c1);
+                double fitness2 = evaluator.evaluate(c2);
 
                 return (int) (fitness1 - fitness2);
             }
@@ -87,7 +75,7 @@ public class RouletteWheelSelector<
 
         double[] fitnesses = new double[length];
         for (int index = 0; index < length; index++) {
-            fitnesses[index] = cache.get(chromosomes.get(index));
+            fitnesses[index] = evaluator.evaluate(chromosomes.get(index));
         }
 
         normalize(fitnesses);
