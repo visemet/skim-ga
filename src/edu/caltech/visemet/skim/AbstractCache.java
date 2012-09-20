@@ -1,8 +1,8 @@
 package edu.caltech.visemet.skim;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 /**
  *
@@ -12,7 +12,7 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
 
     private int maxSize;
 
-    private Map<K, V> map = new WeakHashMap<>();
+    private Map<K, V> map = new HashMap<>();
 
     public AbstractCache(int maxSize) {
         if (maxSize < 1) {
