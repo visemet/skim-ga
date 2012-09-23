@@ -21,7 +21,53 @@ public abstract class AbstractGene<T, S extends Base<T>> implements Gene<T, S> {
      * @param sequence the sequence of this gene
      */
     public AbstractGene(List<S> sequence) {
+        validateSequence(sequence);
         this.sequence = sequence;
+    }
+
+    /**
+     * Checks whether the specified sequence is {@code null}.
+     *
+     * @param sequence the sequence to be checked
+     *
+     * @throws IllegalArgumentException if the specified sequence is
+     * {@code null}
+     */
+    private void validateSequence(List<S> sequence) {
+        if (sequence == null) {
+            throw new IllegalArgumentException("sequence cannot be null");
+        }
+    }
+
+    /**
+     * Checks whether the specified index is negative or greater than or equal
+     * to the length of the sequence.
+     *
+     * @param index the index to be checked
+     *
+     * @throws IllegalArgumentException if the specified index is negative or
+     * greater than or equal to the length of the sequence
+     */
+    private void validateIndex(int index) {
+        if (index < 0) {
+            throw new IllegalArgumentException("index cannot be negative");
+        } else if (index >= length()) {
+            throw new IllegalArgumentException(
+                    "index cannot be greater than or equals to length");
+        }
+    }
+
+    /**
+     * Checks whether the specified base is {@code null}.
+     *
+     * @param base the base to be checked
+     *
+     * @throws IllegalArgumentException if the specified base is {@code null}
+     */
+    private void validateBase(S base) {
+        if (base == null) {
+            throw new IllegalArgumentException("base cannot be null");
+        }
     }
 
     @Override
@@ -37,17 +83,22 @@ public abstract class AbstractGene<T, S extends Base<T>> implements Gene<T, S> {
     }
 
     @Override
-    public void setSequence(List<S> sequence) {
+    public void setSequence(List<S> sequence)  {
+        validateSequence(sequence);
         this.sequence = sequence;
     }
 
+
     @Override
     public S getBaseAt(int index) {
+        validateIndex(index);
         return sequence.get(index);
     }
 
     @Override
     public void setBaseAt(int index, S base) {
+        validateIndex(index);
+        validateBase(base);
         sequence.set(index, base);
     }
 
