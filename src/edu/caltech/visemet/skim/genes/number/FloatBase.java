@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Random;
 
 /**
+ * A base implementation that holds a {@code float} value.
  *
  * @author Max Hirschhorn #visemet
  */

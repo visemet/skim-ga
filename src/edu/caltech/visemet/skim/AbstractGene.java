@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Random;
 
 /**
+ * A skeletal implementation of the {@code Gene} interface.
  *
  * @param <T> the type of value for bases of this gene
  * @param <S> the type of base for this gene

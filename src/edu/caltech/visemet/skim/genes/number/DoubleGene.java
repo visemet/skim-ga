@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
+ * A gene implementation that holds a collection of {@code double} values.
  *
  * @param <T> the type of value for bases of this gene
  * @param <S> the type of base for this gene

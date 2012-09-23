@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Random;
 
 /**
+* A base implementation that holds a {@code byte} value.
  *
  * @author Max Hirschhorn #visemet
  */
