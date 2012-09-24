@@ -169,4 +169,9 @@ public class NpointCrossover<
 
         return children;
     }
+
+    @Override
+    public int getNumChildren(int numParents) {
+        return numParents;
+    }
 }

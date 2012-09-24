@@ -131,4 +131,9 @@ public class UniformCrossover<
 
         return children;
     }
+
+    @Override
+    public int getNumChildren(int numParents) {
+        return numParents;
+    }
 }
