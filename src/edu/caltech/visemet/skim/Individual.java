@@ -12,11 +12,6 @@ public interface Individual {
     void initialize();
 
     /**
-     * Modifies this individual.
-     */
-    void mutate();
-
-    /**
      * Returns a copy of this individual.
      *
      * @return another individual, identical to this instance

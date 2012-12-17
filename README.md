@@ -20,8 +20,6 @@ Individual = member of a population
     interface Individual
         void initialize()
 
-        void mutate()
-
         Individual copy()
 
 Population = collection of individuals
@@ -65,3 +63,5 @@ GeneticAlgorithm = process that controls how population evolves
         Population evolve(Population population, FitnessFunction function)
 
         boolean shouldTerminate()
+
+
