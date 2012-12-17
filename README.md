@@ -60,6 +60,12 @@ MutationOperator = logic that modifies individuals for next population
 GeneticAlgorithm = process that controls how population evolves
 
     interface GeneticAlgorithm
+        void apply(SelectionOperator selector);
+
+        void apply(CrossoverOperator crossover);
+
+        void apply(MutationOperator mutator);
+
         Population evolve(Population population, FitnessFunction function)
 
         boolean shouldTerminate()
