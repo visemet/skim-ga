@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author Max Hirschhorn #visemet
  */
-public interface CrossoverOperator extends SelectionOperator {
+public interface CrossoverOperator<I extends Individual<I>> extends SelectionOperator<I> {
 
     /**
      * Returns individuals from the results of crossover operations on the
@@ -17,5 +17,5 @@ public interface CrossoverOperator extends SelectionOperator {
      * @return a list of individuals representing crossed-over pairs of
      * individuals from the specified list of individuals
      */
-    List<Individual> crossover(List<Individual> individuals);
+    List<I> crossover(List<I> individuals);
 }

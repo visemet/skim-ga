@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author Max Hirschhorn #visemet
  */
-public interface MutationOperator extends SelectionOperator {
+public interface MutationOperator<I extends Individual<I>> extends SelectionOperator<I> {
 
     /**
      * Returns individuals from the results of mutation operations on the
@@ -17,5 +17,5 @@ public interface MutationOperator extends SelectionOperator {
      * @return a list of individuals representing mutated individuals from the
      * specified list of individuals
      */
-    List<Individual> mutate(List<Individual> individuals);
+    List<I> mutate(List<I> individuals);
 }

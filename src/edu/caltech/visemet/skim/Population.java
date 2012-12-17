@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author Max Hirschhorn #visemet
  */
-public interface Population {
+public interface Population<I extends Individual<I>> {
 
     /**
      * Initializes this population.
@@ -18,14 +18,14 @@ public interface Population {
      *
      * @param individual the individual to include
      */
-    void expand(Individual individual);
+    void expand(I individual);
 
     /**
      * Adds the specified list of individuals to this population.
      *
      * @param individuals the list of individuals to include
      */
-    void expand(List<Individual> individuals);
+    void expand(List<I> individuals);
 
     /**
      * Returns the size of this population.
@@ -39,5 +39,5 @@ public interface Population {
      *
      * @return a list representation of this population
      */
-    List<Individual> asList();
+    List<I> asList();
 }

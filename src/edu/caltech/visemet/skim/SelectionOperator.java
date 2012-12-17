@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author Max Hirschhorn #visemet
  */
-public interface SelectionOperator {
+public interface SelectionOperator<I extends Individual<I>> {
 
     /**
      * Returns a selection of individuals from the specified population based
@@ -17,5 +17,5 @@ public interface SelectionOperator {
      *
      * @return a list of individuals from the specified population
      */
-    List<Individual> select(Population population, FitnessFunction function);
+    List<I> select(Population<I> population, FitnessFunction<I> function);
 }

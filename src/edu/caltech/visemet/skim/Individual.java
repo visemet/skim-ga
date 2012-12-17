@@ -4,7 +4,7 @@ package edu.caltech.visemet.skim;
  *
  * @author Max Hirschhorn #visemet
  */
-public interface Individual {
+public interface Individual<I extends Individual> {
 
     /**
      * Initializes this individual.
@@ -16,5 +16,5 @@ public interface Individual {
      *
      * @return another individual, identical to this instance
      */
-    Individual copy();
+    I copy();
 }

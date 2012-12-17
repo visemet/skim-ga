@@ -4,7 +4,7 @@ package edu.caltech.visemet.skim;
  *
  * @author Max Hirschhorn #visemet
  */
-public interface GeneticAlgorithm {
+public interface GeneticAlgorithm<I extends Individual<I>> {
 
     /**
      * Returns the next population evolved by this genetic algorithm from the
@@ -16,7 +16,7 @@ public interface GeneticAlgorithm {
      * @return a population containing the results of the selection, crossover,
      * and mutation operations
      */
-    Population evolve(Population population, FitnessFunction function);
+    Population<I> evolve(Population<I> population, FitnessFunction<I> function);
 
     /**
      * Returns whether or not this genetic algorithm should continue to evolve.

@@ -8,9 +8,9 @@ import java.util.List;
  *
  * @author Max Hirschhorn #visemet
  */
-public class DefaultPopulation implements Population {
+public class DefaultPopulation<I extends Individual<I>> implements Population<I> {
 
-    private final List<Individual> members = new ArrayList<>();
+    private final List<I> members = new ArrayList<>();
 
     public DefaultPopulation() { }
 
@@ -22,12 +22,12 @@ public class DefaultPopulation implements Population {
     }
 
     @Override
-    public void expand(final Individual individual) {
+    public void expand(final I individual) {
         members.add(individual);
     }
 
     @Override
-    public void expand(final List<Individual> individuals) {
+    public void expand(final List<I> individuals) {
         members.addAll(individuals);
     }
 
@@ -37,7 +37,7 @@ public class DefaultPopulation implements Population {
     }
 
     @Override
-    public List<Individual> asList() {
+    public List<I> asList() {
         return Collections.unmodifiableList(members);
     }
 }

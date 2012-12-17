@@ -4,7 +4,7 @@ package edu.caltech.visemet.skim;
  *
  * @author Max Hirschhorn #visemet
  */
-public interface FitnessFunction {
+public interface FitnessFunction<I extends Individual<I>> {
 
     /**
      * Returns a quality-measure of the specified individual.
@@ -13,5 +13,5 @@ public interface FitnessFunction {
      *
      * @return the fitness value for the specified individual
      */
-    double evaluate(Individual individual);
+    double evaluate(I individual);
 }
