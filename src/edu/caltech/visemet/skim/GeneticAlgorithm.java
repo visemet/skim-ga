@@ -7,24 +7,24 @@ package edu.caltech.visemet.skim;
 public interface GeneticAlgorithm<I extends Individual<I>> {
 
     /**
-     * Adds the specified selection operator to the list of selection operators
-     * applied by this genetic algorithm.
+     * Replaces the selection operator used by this genetic algorithm with the
+     * specified selection operator.
      *
      * @param selector the selection operator to apply
      */
     void apply(SelectionOperator<I> selector);
 
     /**
-     * Adds the specified crossover operator to the list of crossover operators
-     * applied by this genetic algorithm.
+     * Replaces the crossover operator used by this genetic algorithm with the
+     * specified crossover operator.
      *
      * @param crossover the crossover operator to apply
      */
     void apply(CrossoverOperator<I> crossover);
 
     /**
-     * Adds the specified mutation operator to the list of mutation operators
-     * applied by this genetic algorithm.
+     * Replaces the mutation operator used by this genetic algorithm with the
+     * specified mutation operator.
      *
      * @param mutator the mutation operator to apply
      */
@@ -40,7 +40,9 @@ public interface GeneticAlgorithm<I extends Individual<I>> {
      * @return a population containing the results of the selection, crossover,
      * and mutation operations
      */
-    Population<I> evolve(Population<I> population, FitnessFunction<I> function);
+    void evolve(
+            Population<I> population, FitnessFunction<I> function,
+            Population<I> nextPopulation);
 
     /**
      * Returns whether or not this genetic algorithm should continue to evolve.

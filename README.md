@@ -73,7 +73,7 @@ GeneticAlgorithm = process that controls how population evolves
 
         void apply(MutationOperator mutator);
 
-        Population evolve(Population population, FitnessFunction function)
+        void evolve(Population population, FitnessFunction function, Population nextPopulation)
 
         boolean shouldTerminate()
 
