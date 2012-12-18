@@ -40,4 +40,19 @@ public class DefaultPopulation<I extends Individual<I>> implements Population<I>
     public List<I> asList() {
         return Collections.unmodifiableList(members);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("{");
+
+        for (Individual member : members) {
+            sb.append(" ").append(member).append(" ");
+        }
+
+        sb.append("}");
+
+        return sb.toString();
+    }
 }
