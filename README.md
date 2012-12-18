@@ -35,6 +35,13 @@ Population = collection of individuals
 
         List<Individual> asList()
 
+PopulationFactory = factory pattern to initialize populations
+
+    interface PopulationFactory
+        Population create()
+
+        void expand(Population population)
+
 FitnessFunction = arbitrary code that assigns fitness value to chromosome
 
     interface FitnessFunction
@@ -69,5 +76,4 @@ GeneticAlgorithm = process that controls how population evolves
         Population evolve(Population population, FitnessFunction function)
 
         boolean shouldTerminate()
-
 
