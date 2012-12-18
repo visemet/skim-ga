@@ -1,27 +1,32 @@
 package edu.caltech.visemet.skim;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.List;
 
 /**
  *
  * @author Max Hirschhorn #visemet
  */
+@XStreamAlias("genetic-algorithm")
 public abstract class AbstractGeneticAlgorithm<I extends Individual<I>>
 implements GeneticAlgorithm<I> {
 
     /**
      * Holds the selection operator applied by this genetic algorithm.
      */
+    @XStreamAlias("selection-operator")
     private SelectionOperator<I> selector = null;
 
     /**
      * Holds the crossover operator applied by this genetic algorithm.
      */
+    @XStreamAlias("crossover-operator")
     private CrossoverOperator<I> crossover = null;
 
     /**
      * Holds the mutation operator applied by this genetic algorithm.
      */
+    @XStreamAlias("mutation-operator")
     private MutationOperator<I> mutator = null;
 
     /**

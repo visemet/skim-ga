@@ -77,3 +77,14 @@ GeneticAlgorithm = process that controls how population evolves
 
         boolean shouldTerminate()
 
+### Configuration
+
+    <simulation>
+        <population-factory/>
+        <fitness-function/>
+        <genetic-algorithm>
+            <selection-operator/>
+            <crossover-operator/>
+            <mutation-operator/>      
+        </genetic-algorithm>
+    </simulation>
