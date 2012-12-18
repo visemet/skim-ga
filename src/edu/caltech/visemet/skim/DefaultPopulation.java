@@ -6,12 +6,18 @@ import java.util.List;
 
 /**
  *
+ * @param <I> the type of individuals in this population
+ *
  * @author Max Hirschhorn #visemet
  */
-public class DefaultPopulation<I extends Individual<I>> implements Population<I> {
+public class DefaultPopulation<I extends Individual<I>>
+implements Population<I> {
 
     private final List<I> members = new ArrayList<>();
 
+    /**
+     * Class constructor.
+     */
     public DefaultPopulation() { }
 
     @Override

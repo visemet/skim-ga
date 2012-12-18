@@ -2,6 +2,8 @@ package edu.caltech.visemet.skim;
 
 /**
  *
+ * @param <I> the type of this individual
+ *
  * @author Max Hirschhorn #visemet
  */
 public interface Individual<I extends Individual> {

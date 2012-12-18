@@ -2,6 +2,8 @@ package edu.caltech.visemet.skim;
 
 /**
  *
+ * @param <I> the type of individuals in this population factory
+ *
  * @author Max Hirschhorn #visemet
  */
 public interface PopulationFactory<I extends Individual<I>> {

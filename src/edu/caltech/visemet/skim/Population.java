@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  *
+ * @param <I> the type of individuals in this population
+ *
  * @author Max Hirschhorn #visemet
  */
 public interface Population<I extends Individual<I>> {

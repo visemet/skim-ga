@@ -2,6 +2,8 @@ package edu.caltech.visemet.skim;
 
 /**
  *
+ * @param <I> the type of individuals in this fitness function
+ *
  * @author Max Hirschhorn #visemet
  */
 public interface FitnessFunction<I extends Individual<I>> {

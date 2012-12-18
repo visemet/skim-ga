@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  *
+ * @param <I> the type of individuals in this selection operator
+ *
  * @author Max Hirschhorn #visemet
  */
 public interface SelectionOperator<I extends Individual<I>> {

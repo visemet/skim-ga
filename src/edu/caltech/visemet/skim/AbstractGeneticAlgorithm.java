@@ -5,6 +5,8 @@ import java.util.List;
 
 /**
  *
+ * @param <I> the type of individuals in this genetic algorithm
+ *
  * @author Max Hirschhorn #visemet
  */
 @XStreamAlias("genetic-algorithm")

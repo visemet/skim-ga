@@ -4,9 +4,12 @@ import java.util.List;
 
 /**
  *
+ * @param <I> the type of individuals in this crossover operator
+ *
  * @author Max Hirschhorn #visemet
  */
-public interface CrossoverOperator<I extends Individual<I>> extends SelectionOperator<I> {
+public interface CrossoverOperator<I extends Individual<I>>
+extends SelectionOperator<I> {
 
     /**
      * Returns individuals from the results of crossover operations on the

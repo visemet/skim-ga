@@ -4,9 +4,12 @@ import java.util.List;
 
 /**
  *
+ * @param <I> the type of individuals in this mutation operator
+ *
  * @author Max Hirschhorn #visemet
  */
-public interface MutationOperator<I extends Individual<I>> extends SelectionOperator<I> {
+public interface MutationOperator<I extends Individual<I>>
+extends SelectionOperator<I> {
 
     /**
      * Returns individuals from the results of mutation operations on the
