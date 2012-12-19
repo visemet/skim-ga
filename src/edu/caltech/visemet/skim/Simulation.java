@@ -2,8 +2,17 @@ package edu.caltech.visemet.skim;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -28,18 +37,44 @@ public class Simulation<I extends Individual<I>> {
      */
     public Simulation() { }
 
+    private static Class<?> getClass(final Object obj) {
+        return obj != null ? obj.getClass() : null;
+    }
+
     /**
      * Stores the configuration of the specified simulation to the specified
      * output stream.
      *
      * @param <I> the type of individuals in the specified simulation
      * @param simulation the simulation to store
-     * @param out the output stream
+     * @param stream the output stream
+     *
+     * @throws IOException if an input or output error occurred
      */
     public static <I extends Individual<I>> void store(
-            XStream xstream, Simulation<I> simulation, OutputStream out) {
+            final Simulation<I> simulation, final OutputStream stream)
+            throws IOException {
 
-        xstream.toXML(simulation, out);
+        XStream xstream = new XStream();
+        xstream.processAnnotations(Simulation.Loader.class);
+
+        Loader loader = new Loader();
+        loader.load(getClass(simulation));
+        loader.load(getClass(simulation.getPopulationFactory()));
+        loader.load(getClass(simulation.getFitnessFunction()));
+        loader.load(getClass(simulation.getGeneticAlgorithm()));
+        loader.load(getClass(simulation.getGeneticAlgorithm().retrieveSelector()));
+        loader.load(getClass(simulation.getGeneticAlgorithm().retrieveCrossover()));
+        loader.load(getClass(simulation.getGeneticAlgorithm().retrieveMutator()));
+
+        for (Class<?> clazz : loader.asList()) {
+            xstream.processAnnotations(clazz);
+        }
+
+        try (ObjectOutputStream out = xstream.createObjectOutputStream(stream)) {
+            out.writeObject(loader);
+            out.writeObject(simulation);
+        }
     }
 
     /**
@@ -47,15 +82,33 @@ public class Simulation<I extends Individual<I>> {
      * stream.
      *
      * @param <I> the type of individuals in the simulation
-     * @param in the input stream
+     * @param stream the input stream
      *
      * @return a simulation configured by the specified input stream
+     *
+     * @throws IOException if an input or output error occurred
+     * @throws ClassNotFoundException if the class was not found
      */
     @SuppressWarnings("unchecked")
     public static <I extends Individual<I>> Simulation<I> load(
-            XStream xstream, InputStream in) {
+            final InputStream stream) throws IOException, ClassNotFoundException {
 
-        return (Simulation<I>) xstream.fromXML(in);
+        XStream xstream = new XStream();
+        xstream.processAnnotations(Simulation.Loader.class);
+
+        Simulation<I> simulation;
+
+        try (ObjectInputStream in = xstream.createObjectInputStream(stream)) {
+            Loader loader = (Loader) in.readObject();
+
+            for (Class<?> clazz : loader.asList()) {
+                xstream.processAnnotations(clazz);
+            }
+
+            simulation = (Simulation<I>) in.readObject();
+        }
+
+        return simulation;
     }
 
     /**
@@ -73,7 +126,7 @@ public class Simulation<I extends Individual<I>> {
      *
      * @param populationFactory the population factory to use
      */
-    public void setPopulationFactory(PopulationFactory<I> populationFactory) {
+    public void setPopulationFactory(final PopulationFactory<I> populationFactory) {
         this.populationFactory = populationFactory;
     }
 
@@ -82,7 +135,7 @@ public class Simulation<I extends Individual<I>> {
      *
      * @return the fitness function used by this simulation
      */
-    public FitnessFunction<I> getFunction() {
+    public FitnessFunction<I> getFitnessFunction() {
         return function;
     }
 
@@ -92,7 +145,7 @@ public class Simulation<I extends Individual<I>> {
      *
      * @param function the fitness function to use
      */
-    public void setFunction(FitnessFunction<I> function) {
+    public void setFunction(final FitnessFunction<I> function) {
         this.function = function;
     }
 
@@ -101,7 +154,7 @@ public class Simulation<I extends Individual<I>> {
      *
      * @return the genetic algorithm used by this simulation
      */
-    public GeneticAlgorithm<I> getAlgorithm() {
+    public GeneticAlgorithm<I> getGeneticAlgorithm() {
         return algorithm;
     }
 
@@ -111,7 +164,7 @@ public class Simulation<I extends Individual<I>> {
      *
      * @param algorithm the genetic algorithm to use
      */
-    public void setAlgorithm(GeneticAlgorithm<I> algorithm) {
+    public void setAlgorithm(final GeneticAlgorithm<I> algorithm) {
         this.algorithm = algorithm;
     }
 
@@ -129,6 +182,45 @@ public class Simulation<I extends Individual<I>> {
             algorithm.evolve(population, function, nextPopulation);
 
             population = nextPopulation;
+        }
+    }
+
+    /**
+     * Container to properly unmarshal a simulation when annotations are used.
+     */
+    @XStreamAlias("loader")
+    private static class Loader {
+
+        /**
+         * Holds the list of classes of this loader.
+         */
+        @XStreamImplicit(itemFieldName="class")
+        private final Set<Class<?>> classes = new LinkedHashSet<>();
+
+        /**
+         * Class constructor.
+         */
+        private Loader() { }
+
+        /**
+         * Adds the specified class to the list of classes of this loader.
+         *
+         * @param clazz the class to load
+         */
+        public void load(final Class<?> clazz) {
+            if (clazz != null) {
+                classes.add(clazz);
+            }
+        }
+
+        /**
+         * Returns this loader as a list.
+         *
+         * @return the list of classes of this loader
+         */
+        public List<Class<?>> asList() {
+            return Collections.<Class<?>>unmodifiableList(
+                    new ArrayList<>(classes));
         }
     }
 }
