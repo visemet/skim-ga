@@ -13,6 +13,8 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -23,12 +25,27 @@ import java.util.Set;
 @XStreamAlias("simulation")
 public class Simulation<I extends Individual<I>> {
 
+    /**
+     * Defines the logging utility used by the simulation.
+     */
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(Simulation.class);
+
+    /**
+     * Holds the population factory of this simulation.
+     */
     @XStreamAlias("population-factory")
     private PopulationFactory<I> populationFactory;
 
+    /**
+     * Holds the fitness function of this simulation.
+     */
     @XStreamAlias("fitness-function")
     private FitnessFunction<I> function;
 
+    /**
+     * Holds the genetic algorithm of this simulation.
+     */
     @XStreamAlias("genetic-algorithm")
     private GeneticAlgorithm<I> algorithm;
 
@@ -37,6 +54,15 @@ public class Simulation<I extends Individual<I>> {
      */
     public Simulation() { }
 
+    /**
+     * Returns the class of the specified object, or {@code null} if the
+     * specified object is {@code null}.
+     *
+     * @param obj the object
+     *
+     * @return the class of the specified object, or {@code null} if the
+     * specified object is {@code null}
+     */
     private static Class<?> getClass(final Object obj) {
         return obj != null ? obj.getClass() : null;
     }
@@ -181,8 +207,11 @@ public class Simulation<I extends Individual<I>> {
             Population<I> nextPopulation = populationFactory.create();
             algorithm.evolve(population, function, nextPopulation);
 
+            LOGGER.debug("{}", population);
             population = nextPopulation;
         }
+
+        LOGGER.debug("{}", population);
     }
 
     /**
