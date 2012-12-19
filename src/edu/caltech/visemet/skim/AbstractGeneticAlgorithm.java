@@ -37,24 +37,39 @@ implements GeneticAlgorithm<I> {
     public AbstractGeneticAlgorithm() { }
 
     @Override
-    public void apply(SelectionOperator<I> selector) {
+    public SelectionOperator<I> retrieveSelector() {
+        return selector;
+    }
+
+    @Override
+    public void apply(final SelectionOperator<I> selector) {
         this.selector = selector;
     }
 
     @Override
-    public void apply(CrossoverOperator<I> crossover) {
+    public CrossoverOperator<I> retrieveCrossover() {
+        return crossover;
+    }
+
+    @Override
+    public void apply(final CrossoverOperator<I> crossover) {
         this.crossover = crossover;
     }
 
     @Override
-    public void apply(MutationOperator<I> mutator) {
+    public MutationOperator<I> retrieveMutator() {
+        return mutator;
+    }
+
+    @Override
+    public void apply(final MutationOperator<I> mutator) {
         this.mutator = mutator;
     }
 
     @Override
     public void evolve(
-            Population<I> population, FitnessFunction<I> function,
-            Population<I> nextPopulation) {
+            final Population<I> population, final FitnessFunction<I> function,
+            final Population<I> nextPopulation) {
 
         if (selector != null) {
             List<I> individuals = selector.select(population, function);

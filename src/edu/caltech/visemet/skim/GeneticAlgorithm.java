@@ -9,6 +9,13 @@ package edu.caltech.visemet.skim;
 public interface GeneticAlgorithm<I extends Individual<I>> {
 
     /**
+     * Retrieves the selection operator used by this genetic algorithm.
+     *
+     * @return the selection operator used by this genetic algorithm
+     */
+    SelectionOperator<I> retrieveSelector();
+
+    /**
      * Replaces the selection operator used by this genetic algorithm with the
      * specified selection operator.
      *
@@ -17,12 +24,26 @@ public interface GeneticAlgorithm<I extends Individual<I>> {
     void apply(SelectionOperator<I> selector);
 
     /**
+     * Retrieves the crossover operator used by this genetic algorithm.
+     *
+     * @return the crossover operator used by this genetic algorithm
+     */
+    CrossoverOperator<I> retrieveCrossover();
+
+    /**
      * Replaces the crossover operator used by this genetic algorithm with the
      * specified crossover operator.
      *
      * @param crossover the crossover operator to apply
      */
     void apply(CrossoverOperator<I> crossover);
+
+    /**
+     * Retrieves the mutation operator used by this genetic algorithm.
+     *
+     * @return the mutation operator used by this genetic algorithm
+     */
+    MutationOperator<I> retrieveMutator();
 
     /**
      * Replaces the mutation operator used by this genetic algorithm with the
