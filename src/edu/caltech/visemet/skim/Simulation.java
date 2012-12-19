@@ -37,12 +37,7 @@ public class Simulation<I extends Individual<I>> {
      * @param out the output stream
      */
     public static <I extends Individual<I>> void store(
-            Simulation<I> simulation, OutputStream out) {
-
-        XStream xstream = new XStream();
-
-        xstream.alias("simulation", Simulation.class);
-        xstream.autodetectAnnotations(true);
+            XStream xstream, Simulation<I> simulation, OutputStream out) {
 
         xstream.toXML(simulation, out);
     }
@@ -58,12 +53,7 @@ public class Simulation<I extends Individual<I>> {
      */
     @SuppressWarnings("unchecked")
     public static <I extends Individual<I>> Simulation<I> load(
-            InputStream in) {
-
-        XStream xstream = new XStream();
-
-        xstream.alias("simulation", Simulation.class);
-        xstream.autodetectAnnotations(true);
+            XStream xstream, InputStream in) {
 
         return (Simulation<I>) xstream.fromXML(in);
     }
