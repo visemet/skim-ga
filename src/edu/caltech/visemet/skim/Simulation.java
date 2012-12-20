@@ -3,6 +3,7 @@ package edu.caltech.visemet.skim;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -212,6 +213,25 @@ public class Simulation<I extends Individual<I>> {
         }
 
         LOGGER.debug("{}", population);
+    }
+
+    /**
+     * @param args the command line arguments
+     *
+     * @throws IOException if an input or output error occurred
+     * @throws ClassNotFoundException if the class was not found
+     */
+    public static void main(String[] args)
+            throws IOException, ClassNotFoundException {
+
+        if (args.length == 1) {
+            String filename = args[0];
+
+            Simulation<? extends Individual<?>> simulation = Simulation.load(
+                    new FileInputStream(filename));
+
+            simulation.run();
+        }
     }
 
     /**
