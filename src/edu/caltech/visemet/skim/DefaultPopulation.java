@@ -22,7 +22,7 @@ implements Population<I> {
 
     @Override
     public void initialize() {
-        for (Individual member : members) {
+        for (I member : members) {
             member.initialize();
         }
     }
@@ -53,7 +53,7 @@ implements Population<I> {
 
         sb.append("{");
 
-        for (Individual member : members) {
+        for (I member : members) {
             sb.append(" ").append(member).append(" ");
         }
 

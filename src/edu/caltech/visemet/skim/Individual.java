@@ -6,7 +6,7 @@ package edu.caltech.visemet.skim;
  *
  * @author Max Hirschhorn #visemet
  */
-public interface Individual<I extends Individual> {
+public interface Individual<I extends Individual<I>> {
 
     /**
      * Initializes this individual.
